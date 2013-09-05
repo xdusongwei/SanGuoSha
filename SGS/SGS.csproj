@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{60421D92-DA75-4022-8B21-5EE4A30F8281}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SGS</RootNamespace>
+    <AssemblyName>SGS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\SGS.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\SGS.XML</DocumentationFile>
+    <FileAlignment>8192</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Beaver">
+      <HintPath>..\..\Beaver\Beaver\bin\Release\Beaver.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Apusic\ServiceInterfaces.cs" />
+    <Compile Include="Apusic\ServiceController.cs" />
+    <Compile Include="Contest.Data\Card.cs" />
+    <Compile Include="Contest.Data\Chief\Chief.cs" />
+    <Compile Include="Contest.Data\Chief\ChiefBase.cs" />
+    <Compile Include="Contest.Data\Chief\Qun.cs" />
+    <Compile Include="Contest.Data\Chief\Shu.cs" />
+    <Compile Include="Contest.Data\Chief\Wei.cs" />
+    <Compile Include="Contest.Data\Chief\Wu.cs" />
+    <Compile Include="Contest.Data\GameException.cs" />
+    <Compile Include="Contest.Data\Skills\Qun\DiaoChan.cs" />
+    <Compile Include="Contest.Data\Skills\Qun\HuaTuo.cs" />
+    <Compile Include="Contest.Data\Skills\Qun\LvBu.cs" />
+    <Compile Include="Contest.Data\Skills\Shu\GuanYu.cs" />
+    <Compile Include="Contest.Data\Skills\Shu\HuangYueYing.cs" />
+    <Compile Include="Contest.Data\Skills\Shu\LiuBei.cs" />
+    <Compile Include="Contest.Data\Skills\Shu\MaChao.cs" />
+    <Compile Include="Contest.Data\Skills\Shu\ZhangFei.cs" />
+    <Compile Include="Contest.Data\Skills\Shu\ZhaoYun.cs" />
+    <Compile Include="Contest.Data\Skills\Shu\ZhuGeLiang.cs" />
+    <Compile Include="Contest.Data\Skills\Wei\CaoCao.cs" />
+    <Compile Include="Contest.Data\Skills\Wei\GuoJia.cs" />
+    <Compile Include="Contest.Data\Skills\Wei\SiMaYi.cs" />
+    <Compile Include="Contest.Data\Skills\Wei\XiaHouDun.cs" />
+    <Compile Include="Contest.Data\Skills\Wei\XuChu.cs" />
+    <Compile Include="Contest.Data\Skills\Wei\ZhangLiao.cs" />
+    <Compile Include="Contest.Data\Skills\Wei\ZhenJi.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\DaQiao.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\GanNing.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\HuangGai.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\LuXun.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\LvMeng.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\SunQuan.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\SunShangXiang.cs" />
+    <Compile Include="Contest.Data\Skills\Wu\ZhouYu.cs" />
+    <Compile Include="Contest.Data\Slot.cs" />
+    <Compile Include="Global\GlobalEvent\Action\Abandonment.cs" />
+    <Compile Include="Global\GlobalEvent\Action\EventNode.cs" />
+    <Compile Include="Global\GlobalEvent\Action\Judgement.cs" />
+    <Compile Include="Global\GlobalEvent\Action\LeadingEvent.cs" />
+    <Compile Include="Global\GlobalEvent\Action\LogicLoop.cs" />
+    <Compile Include="Global\GlobalEvent\Action\Referee.cs" />
+    <Compile Include="Global\GlobalEvent\Action\SelectChief.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\Equipage.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\GuoHeChaiQiao.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\JieDaoShaRen.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\JueDou.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\LeBuSiShu.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\NanManRuQin.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\Sha.cs" />
+    <Compile Include="Equipage\Armor.cs" />
+    <Compile Include="Equipage\Weapon.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\ShanDian.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\ShunShouQianYang.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\Tao.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\TaoYuanJieYi.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\WanJianQiFa.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\WuGuFengDeng.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\WuXieKeJi.cs" />
+    <Compile Include="Global\GlobalEvent\Effect\WuZhongShengYou.cs" />
+    <Compile Include="Global\GlobalEvent\Types.cs" />
+    <Compile Include="Global\MessageCore.cs" />
+    <Compile Include="Global\GameBase.cs" />
+    <Compile Include="Global\GlobalData.cs" />
+    <Compile Include="Global\GlobalEvent\GlobalEvent.cs" />
+    <Compile Include="Global\Game.cs" />
+    <Compile Include="Contest.Data\Player.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Contest.Data\Skills\SkillBase.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

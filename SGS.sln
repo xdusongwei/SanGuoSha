@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGS", "SGS\SGS.csproj", "{60421D92-DA75-4022-8B21-5EE4A30F8281}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SGS\\SGS.csproj
+		SccLocalPath1 = .
+		SccProjectFilePathRelativizedFromConnection1 = SGS\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60421D92-DA75-4022-8B21-5EE4A30F8281}.Debug|x86.ActiveCfg = Debug|x86
+		{60421D92-DA75-4022-8B21-5EE4A30F8281}.Debug|x86.Build.0 = Debug|x86
+		{60421D92-DA75-4022-8B21-5EE4A30F8281}.Release|x86.ActiveCfg = Release|x86
+		{60421D92-DA75-4022-8B21-5EE4A30F8281}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
