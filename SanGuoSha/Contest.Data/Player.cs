@@ -500,7 +500,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             bool ret = false;
             while (Debuff.Count != 0)
             {
-                if (aCard.Same(Debuff.Peek()))
+                if (aCard.IsSame(Debuff.Peek()))
                 {
                     Debuff.Pop();
                     ret = true;
@@ -525,7 +525,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             if (aCard == null) return false;
             foreach (Card c in Hands)
             {
-                if (aCard.Same(c))
+                if (aCard.IsSame(c))
                 {
                     Hands.Remove(c);
                     return true;

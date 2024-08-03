@@ -559,7 +559,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                                 {
                                     bool found = false;
                                     foreach (Card c2 in Game.CardsBuffer[Game.WGFDSlotName].Cards)
-                                        if (c.Same(c2))
+                                        if (c.IsSame(c2))
                                         {
                                             found = true;
                                             break;
@@ -578,7 +578,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                                 {
                                     bool found = false;
                                     foreach (Card c2 in Game.WaittingData.Target.Hands)
-                                        if (c.Same(c2))
+                                        if (c.IsSame(c2))
                                         {
                                             found = true;
                                             break;
@@ -603,7 +603,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                                 {
                                     bool found = false;
                                     foreach (Card c2 in Game.WaittingData.Target.Hands)
-                                        if (c.Same(c2))
+                                        if (c.IsSame(c2))
                                         {
                                             found = true;
                                             break;
@@ -687,7 +687,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                                     {
                                         bool found = false;
                                         foreach (Card c2 in Game.WaittingData.Target.Hands)
-                                            if (c.Same(c2))
+                                            if (c.IsSame(c2))
                                             {
                                                 found = true;
                                                 break;

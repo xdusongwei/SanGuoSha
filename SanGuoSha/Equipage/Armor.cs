@@ -69,7 +69,7 @@ namespace SanGuoSha.ServerCore.Contest.Equipage
                 case Card.Effect.Sha:
                     if (aArmor == Card.Effect.RenWangDun)
                     {
-                        if (aCards.Where(c=>c.CardHuaSe == Card.Suit.Diamond || c.CardHuaSe == Card.Suit.Heart).Count() < 1 )
+                        if (aCards.Where(c=>c.CardSuit == Card.Suit.Diamond || c.CardSuit == Card.Suit.Heart).Count() < 1 )
                         {
                                 return false;
                         }
@@ -105,7 +105,7 @@ namespace SanGuoSha.ServerCore.Contest.Equipage
                         {
                             Card ret = aData.Game.popJudgementCard(aOwner, Card.Effect.BaGuaZhen);
                             aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard , res.SkillName , new Card[] { ret }, Card.Effect.None, aOwner, null, null);
-                            if (ret.CardHuaSe == Card.Suit.Diamond || ret.CardHuaSe == Card.Suit.Heart)
+                            if (ret.CardSuit == Card.Suit.Diamond || ret.CardSuit == Card.Suit.Heart)
                             {
                                 return new MessageCore.AskForResult(false, aOwner, new ChiefBase[0] { }, new Card[] { ret }, Card.Effect.Shan, false, false, string.Empty);
                             }

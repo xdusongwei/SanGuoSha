@@ -37,7 +37,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 if (aAskFor != MessageCore.AskForEnum.AskForTao && aAskFor != MessageCore.AskForEnum.AskForTaoOrJiu) return false;
                 if (aCards.Count() != 1) return false;
                 if (!aData.Game.GamePlayers[aChief].HasCardsInHandOrEquipage(aCards)) return false;
-                if (aCards[0].CardHuaSe != Card.Suit.Heart && aCards[0].CardHuaSe != Card.Suit.Diamond) return false;
+                if (aCards[0].CardSuit != Card.Suit.Heart && aCards[0].CardSuit != Card.Suit.Diamond) return false;
             }
             return true;
         }

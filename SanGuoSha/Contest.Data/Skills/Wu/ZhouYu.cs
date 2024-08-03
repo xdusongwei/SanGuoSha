@@ -51,7 +51,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     MessageCore.AskForResult res2 = aData.Game.AsynchronousCore.AskForCards(target, MessageCore.AskForEnum.TargetCard, aChief);
                     Card c = aData.Game.AutoSelect(aChief);
                     aData.Game.AsynchronousCore.SendMessage(new Beaver("fanjian.card" , target.ChiefName , aChief.ChiefName , Card.Cards2Beaver("cards" , new Card[]{c})).ToString());// new XElement("fanjian.card", new XElement("target", target.ChiefName), new XElement("target2", aChief.ChiefName), Card.Cards2XML("cards", new Card[] { c })));
-                    if (c.CardHuaSe != res.Cards[0].CardHuaSe)
+                    if (c.CardSuit != res.Cards[0].CardSuit)
                     {
                         aData.Game.DamageHealth(target, 1, aChief, new GlobalEvent.EventRecoard(aChief, target, new Card[] { }, Card.Effect.Skill, SkillName));
                     }

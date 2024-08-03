@@ -49,7 +49,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 if (SkillStatus != SkillEnabled.Enable) return false;
                 if (aAskFor != MessageCore.AskForEnum.Aggressive) return false;
                 if (aCards.Count() != 1) return false;
-                if (aCards[0].CardHuaSe != Card.Suit.Club && aCards[0].CardHuaSe != Card.Suit.Spade) return false;
+                if (aCards[0].CardSuit != Card.Suit.Club && aCards[0].CardSuit != Card.Suit.Spade) return false;
                 if (aTargets.Count() != 1) return false;
                 if (aTargets[0] == aChief) return false;
                 if (!aData.Game.GamePlayers[aTargets[0]].HasCardWithJudgementArea) return false;

@@ -44,7 +44,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
                     Card c = aData.Game.popJudgementCard(aChief, Card.Effect.TieQi);
                     aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, SkillName, new Card[] { c }, Card.Effect.TieQi, aChief, null, null);
-                    if (c.CardHuaSe == Card.Suit.Heart || c.CardHuaSe == Card.Suit.Diamond)
+                    if (c.CardSuit == Card.Suit.Heart || c.CardSuit == Card.Suit.Diamond)
                     {
                         return 0;
                     }

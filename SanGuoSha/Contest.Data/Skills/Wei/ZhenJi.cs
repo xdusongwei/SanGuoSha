@@ -15,7 +15,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (aCard.CardEffect == Card.Effect.LuoShen)
             {
-                if (aCard.CardHuaSe == Card.Suit.Club || aCard.CardHuaSe == Card.Suit.Spade)
+                if (aCard.CardSuit == Card.Suit.Club || aCard.CardSuit == Card.Suit.Spade)
                 {
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { aCard }));
                     aEnableSendToBin = false;
@@ -37,7 +37,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     c = aData.Game.popJudgementCard(aChief, Card.Effect.LuoShen);
                     aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, res.SkillName, new Card[] { c }, Card.Effect.None, aChief, null, null);
                 }
-            } while (c != null && (c.CardHuaSe == Card.Suit.Spade || c.CardHuaSe == Card.Suit.Club));
+            } while (c != null && (c.CardSuit == Card.Suit.Spade || c.CardSuit == Card.Suit.Club));
         }
     }
 
@@ -65,7 +65,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         public override bool ActiveSkill(string aSkillName, Card[] aCards, ChiefBase aChief, ChiefBase[] aTargets, MessageCore.AskForEnum aAskFor, ref Card.Effect aEffect, GlobalData aData)
         {
-            if (SkillName == aSkillName && aCards.Count() == 1 && aAskFor == MessageCore.AskForEnum.Shan && (aCards[0].CardHuaSe == Card.Suit.Spade || aCards[0].CardHuaSe == Card.Suit.Club ))
+            if (SkillName == aSkillName && aCards.Count() == 1 && aAskFor == MessageCore.AskForEnum.Shan && (aCards[0].CardSuit == Card.Suit.Spade || aCards[0].CardSuit == Card.Suit.Club ))
             {
                 
                 aEffect = Card.Effect.Shan;

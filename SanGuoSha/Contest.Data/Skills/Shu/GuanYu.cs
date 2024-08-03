@@ -32,7 +32,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (SkillName == aSkillName)
             {
-                if (SkillStatus == SkillEnabled.Enable && aCards.Count() == 1 && (aCards[0].CardHuaSe == Card.Suit.Diamond || aCards[0].CardHuaSe == Card.Suit.Heart) && (aAskFor == MessageCore.AskForEnum.Sha || aAskFor == MessageCore.AskForEnum.Aggressive))
+                if (SkillStatus == SkillEnabled.Enable && aCards.Count() == 1 && (aCards[0].CardSuit == Card.Suit.Diamond || aCards[0].CardSuit == Card.Suit.Heart) && (aAskFor == MessageCore.AskForEnum.Sha || aAskFor == MessageCore.AskForEnum.Aggressive))
                 {
                     if (aAskFor == MessageCore.AskForEnum.Aggressive)
                     {

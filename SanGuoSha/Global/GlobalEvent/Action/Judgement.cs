@@ -39,7 +39,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         //获取判定牌
                         Card judgementBLCD = popJudgementCard(aChief, buff.CardEffect);
                         //对判定牌的处理
-                        if (judgementBLCD.CardHuaSe != Card.Suit.Club)
+                        if (judgementBLCD.CardSuit != Card.Suit.Club)
                             aData.Take = false;
                         else
                             aData.Take = true;
@@ -58,7 +58,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         //获取判定牌
                         Card judgementLBSS = popJudgementCard(aChief, buff.CardEffect);
                         //对判定牌的处理
-                        if (judgementLBSS.CardHuaSe != Card.Suit.Heart)
+                        if (judgementLBSS.CardSuit != Card.Suit.Heart)
                             aData.Lead = false;
                         else
                             aData.Lead = true;
@@ -114,7 +114,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         //取出判定牌
                         Card judgementSD = popJudgementCard(aChief, buff.CardEffect);
                         //费血
-                        if (judgementSD.CardHuaSe == Card.Suit.Spade && judgementSD.CardNumber > 1 && judgementSD.CardNumber < 10)
+                        if (judgementSD.CardSuit == Card.Suit.Spade && judgementSD.CardIndex > 1 && judgementSD.CardIndex < 10)
                         {
                             AsynchronousCore.SendMessage(
                                 new Beaver("removedebuff",aChief.ChiefName , Card.Cards2Beaver("cards" , new Card[]{buff})).ToString()

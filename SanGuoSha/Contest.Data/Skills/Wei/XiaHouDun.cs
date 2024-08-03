@@ -25,7 +25,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     Card judgement = aData.Game.popJudgementCard(aTarget, Card.Effect.GangLie);
                     aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, res.SkillName, new Card[] { judgement }, Card.Effect.GangLie, aTarget, aSource, null);
 
-                    if (judgement.CardHuaSe != Card.Suit.Heart)
+                    if (judgement.CardSuit != Card.Suit.Heart)
                     {
                         if (aData.Game.GamePlayers[aSource].Hands.Count < 2)
                         {

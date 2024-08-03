@@ -619,25 +619,25 @@ namespace SanGuoSha.ServerCore.Contest.Global
             {
                 if (!GamePlayers[aChief].RemoveHand(c) && !GamePlayers[aChief].RemoveBuff(c))
                 {
-                    if (GamePlayers[aChief].Weapon != null && GamePlayers[aChief].Weapon.Same(c))
+                    if (GamePlayers[aChief].Weapon != null && GamePlayers[aChief].Weapon.IsSame(c))
                     {
                         GamePlayers[aChief].UnloadWeapon(this, gData);
                         foreach (ASkill s in aChief.Skills)
                             s.DropEquipage(aChief, gData);
                     }
-                    else if (GamePlayers[aChief].Armor != null && GamePlayers[aChief].Armor.Same(c))
+                    else if (GamePlayers[aChief].Armor != null && GamePlayers[aChief].Armor.IsSame(c))
                     {
                         GamePlayers[aChief].UnloadArmor(this);
                         foreach (ASkill s in aChief.Skills)
                             s.DropEquipage(aChief, gData);
                     }
-                    else if (GamePlayers[aChief].Jia1Ma != null && GamePlayers[aChief].Jia1Ma.Same(c))
+                    else if (GamePlayers[aChief].Jia1Ma != null && GamePlayers[aChief].Jia1Ma.IsSame(c))
                     {
                         GamePlayers[aChief].UnloadJia1(this);
                         foreach (ASkill s in aChief.Skills)
                             s.DropEquipage(aChief, gData);
                     }
-                    else if (GamePlayers[aChief].Jian1Ma != null && GamePlayers[aChief].Jian1Ma.Same(c))
+                    else if (GamePlayers[aChief].Jian1Ma != null && GamePlayers[aChief].Jian1Ma.IsSame(c))
                     {
                         GamePlayers[aChief].UnloadJia1(this);
                         foreach (ASkill s in aChief.Skills)

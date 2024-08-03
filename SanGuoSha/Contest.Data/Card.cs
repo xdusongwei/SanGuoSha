@@ -3,10 +3,6 @@
  * Namespace SanGuoSha.ServerCore.Contest.Data
  * 定义牌和牌堆
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Xml.Linq;
 using SanGuoSha.ServerCore.Contest.Data.GameException;
 using BeaverMarkupLanguage;
@@ -17,37 +13,26 @@ namespace SanGuoSha.ServerCore.Contest.Data
     /// <summary>
     /// 牌类
     /// </summary>
-    public class Card
+    /// <remarks>
+    /// 创建一张牌
+    /// </remarks>
+    /// <param name="aID">牌的唯一编号</param>
+    /// <param name="aSuit">花色</param>
+    /// <param name="aIndex">牌号</param>
+    /// <param name="aEffect">基本效果</param>
+    /// <param name="aElement">牌的属性效果</param>
+    public class Card(int aID, Card.Suit aSuit, int aIndex, Card.Effect aEffect, Card.ElementType aElement)
     {
-        /// <summary>
-        /// 创建一张牌
-        /// </summary>
-        /// <param name="aID">牌的编号</param>
-        /// <param name="aHuaSe">花色</param>
-        /// <param name="aNumber">点数</param>
-        /// <param name="aEffect">基本效果</param>
-        /// <param name="aElement">牌的属性效果</param>
-        public Card(int aID , Suit aHuaSe , int aNumber , Effect aEffect , ElementType aElement)
-        {
-            ID = aID;
-            CardHuaSe = aHuaSe;
-            CardNumber = aNumber;
-            OriginEffect = aEffect;
-            OriginHuaSe = aHuaSe;
-            CardEffect = aEffect;
-            OriginElement = aElement;
-            Element = aElement;
-        }
 
         /// <summary>
         /// 创建一张没有属性的牌
         /// </summary>
         /// <param name="aID">牌的编号</param>
-        /// <param name="aHuaSe">花色</param>
-        /// <param name="aNumber">点数</param>
+        /// <param name="aSuit">花色</param>
+        /// <param name="aIndex">牌号</param>
         /// <param name="aEffect">基本效果</param>
-        public Card(int aID, Suit aHuaSe, int aNumber, Effect aEffect)
-            :this(aID  ,aHuaSe ,aNumber , aEffect , ElementType.None)
+        public Card(int aID, Suit aSuit, int aIndex, Effect aEffect)
+            :this(aID  ,aSuit ,aIndex , aEffect , ElementType.None)
         {
 
         }
@@ -57,10 +42,10 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// </summary>
         /// <param name="c">另一张牌的引用</param>
         /// <returns>若号码相同,返回true,其他情况包括null参数返回false</returns>
-        public bool Same(Card c)
+        public bool IsSame(Card? c)
         {
             if (c == null) return false;
-            return c.ID == ID ? true : false;
+            return c.ID == ID;
         }
 
         /// <summary>
@@ -259,29 +244,29 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <summary>
         /// 这张牌的编号
         /// </summary>
-        public readonly int ID;
+        public readonly int ID = aID;
 
         /// <summary>
         /// 这张牌的花色
         /// </summary>
-        public Suit CardHuaSe;
+        public Suit CardSuit = aSuit;
 
         /// <summary>
-        /// 这张牌的点数，只读
+        /// 这张牌的牌号，只读
         /// </summary>
-        public readonly int CardNumber;
+        public readonly int CardIndex = aIndex;
         /// <summary>
         /// 原效果，只读
         /// </summary>
-        public readonly Effect OriginEffect;
+        public readonly Effect OriginEffect = aEffect;
         /// <summary>
         /// 原花色，只读
         /// </summary>
-        public readonly Suit OriginHuaSe;
+        public readonly Suit OriginSuit = aSuit;
         /// <summary>
         /// 牌的效果
         /// </summary>
-        public Effect CardEffect;
+        public Effect CardEffect = aEffect;
 
 
         /// <summary>
@@ -308,12 +293,12 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             get;
             set;
-        }
+        } = aElement;
 
         /// <summary>
         /// 牌原有的属性
         /// </summary>
-        public readonly ElementType OriginElement;
+        public readonly ElementType OriginElement = aElement;
 
 
         /// <summary>
@@ -322,7 +307,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns></returns>
         public Card GetOriginalCard()
         {
-            return new Card(ID, OriginHuaSe, CardNumber, OriginEffect , OriginElement);
+            return new Card(ID, OriginSuit, CardIndex, OriginEffect , OriginElement);
         }
 
         /// <summary>
@@ -333,7 +318,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>一个XML形式的牌号码对象</returns>
         internal static XElement Cards2XML(string aNodeName, Card[] aCards)
         {
-            XElement xcards = new XElement(aNodeName);
+            XElement xcards = new(aNodeName);
             foreach (Card c in aCards)
                 xcards.Add(new XElement("card", c.ID));
             return xcards;
@@ -341,7 +326,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         internal static BeaverMarkupLanguage.Beaver Cards2Beaver(string aNodeName, Card[] aCards)
         {
-            Beaver ret = new Beaver();
+            Beaver ret = [];
             foreach (Card c in aCards)
                 ret.Add(string.Empty, c.ID);
             ret.SetHeaderElementName(aNodeName);
@@ -370,24 +355,24 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <summary>
         /// 未知牌
         /// </summary>
-        public static readonly Card Unknown = new Card(0, Card.Suit.Spade, 1, Card.Effect.None);
+        public static readonly Card Unknown = new(0, Card.Suit.Spade, 1, Card.Effect.None);
 
         /// <summary>
         /// 黑桃
         /// </summary>
-        public static readonly Card Spade = new Card(-1, Card.Suit.Spade, 1, Card.Effect.None);
+        public static readonly Card Spade = new(-1, Card.Suit.Spade, 1, Card.Effect.None);
         /// <summary>
         /// 草花
         /// </summary>
-        public static readonly Card Club = new Card(-2, Card.Suit.Club, 1, Card.Effect.None);
+        public static readonly Card Club = new(-2, Card.Suit.Club, 1, Card.Effect.None);
         /// <summary>
         /// 红桃
         /// </summary>
-        public static readonly Card Heart = new Card(-3, Card.Suit.Heart, 1, Card.Effect.None);
+        public static readonly Card Heart = new(-3, Card.Suit.Heart, 1, Card.Effect.None);
         /// <summary>
         /// 方片
         /// </summary>
-        public static readonly Card Diamond = new Card(-4, Card.Suit.Diamond, 1, Card.Effect.None);
+        public static readonly Card Diamond = new(-4, Card.Suit.Diamond, 1, Card.Effect.None);
 
         /// <summary>
         /// 构造牌堆
@@ -457,30 +442,28 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <summary>
         /// 将弃牌堆的牌洗好放入拿牌堆
         /// </summary>
-        public void FillCard()
+        public void FillCards()
         {
-            List<Card> lst = new List<Card>();
-            foreach (Card c in CardsHeap2)
+            List<Card> lst = [];
+            foreach (Card c in TrashCardsHeap)
             {
                 lst.Add(c.GetOriginalCard());
             }
 
-            Card[] arr = lst.ToArray();
+            Card[] arr = [.. lst];
             for (int i = 0; i < lst.Count; i++)
             {
                 int a = GetRandom(lst.Count);
                 int b = GetRandom(lst.Count);
-                
-                Card t = arr[a];
-                arr[a] = arr[b];
-                arr[b] = t;
+
+                (arr[b], arr[a]) = (arr[a], arr[b]);
             }
-            lst = arr.ToList();
+            lst = [.. arr];
             foreach (Card c in lst)
             {
-                CardsHeap.Enqueue(c);
+                TakingCardsHeap.Enqueue(c);
             }
-            CardsHeap2.Clear();
+            TrashCardsHeap.Clear();
         }
 
         /// <summary>
@@ -489,7 +472,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <param name="aCard">牌对象</param>
         public void AddCard(Card aCard)
         {
-            CardsHeap2.Enqueue(aCard.GetOriginalCard());
+            TrashCardsHeap.Enqueue(aCard.GetOriginalCard());
         }
 
         /// <summary>
@@ -499,7 +482,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         public void AddCards(Card[] aCards)
         {
             foreach (Card c in aCards)
-                CardsHeap2.Enqueue(c);
+                TrashCardsHeap.Enqueue(c);
         }
 
         /// <summary>
@@ -508,12 +491,12 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>若无法给出一张牌,则返回null.否则返回牌对象</returns>
         public Card Pop()
         {
-            if (CardsHeap.Count == 0)
+            if (TakingCardsHeap.Count == 0)
             {
-                FillCard();
+                FillCards();
             }
-            if(CardsHeap.Count> 0 )
-                return CardsHeap.Dequeue();
+            if(TakingCardsHeap.Count > 0)
+                return TakingCardsHeap.Dequeue();
             else
                 throw new NoMoreCard(_game.GamePlayers);
         }
@@ -525,14 +508,14 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>成功返回true</returns>
         public bool PopCard(int aID)
         {
-            if (CardsHeap.Where(c => c.ID == aID).Count() > 0)
+            if (TakingCardsHeap.Where(c => c.ID == aID).Any())
             {
-                CardsHeap = new Queue<Card>(CardsHeap.Where(c=>c.ID != aID));
+                TakingCardsHeap = new Queue<Card>(TakingCardsHeap.Where(c=>c.ID != aID));
                 return true;
             }
-            else if (CardsHeap2.Where(c => c.ID == aID).Count() > 0)
+            else if (TrashCardsHeap.Where(c => c.ID == aID).Any())
             {
-                CardsHeap2 = new Queue<Card>(CardsHeap2.Where(c => c.ID != aID));
+                TrashCardsHeap = new Queue<Card>(TrashCardsHeap.Where(c => c.ID != aID));
                 return true;
             }
             else
@@ -546,11 +529,11 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns></returns>
         public bool PutOnTop(Card[] aCards)
         {
-            if (aCards.Count() == 0) return true;
-            List<Card> lst = new List<Card>(aCards);
-            foreach (Card c in CardsHeap)
+            if (aCards.Length == 0) return true;
+            List<Card> lst = new(aCards);
+            foreach (Card c in TakingCardsHeap)
                 lst.Add(c);
-            CardsHeap = new Queue<Card>(lst);
+            TakingCardsHeap = new Queue<Card>(lst);
             return true;
         }
 
@@ -564,7 +547,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (aCards.Count() == 0) return true;
             foreach (Card c in aCards)
-                CardsHeap.Enqueue(c);
+                TakingCardsHeap.Enqueue(c);
             return true;
         }
 
@@ -575,17 +558,17 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>牌的数组</returns>
         public Card[] Pop(int n)
         {
-            List<Card> lst = new List<Card>();
-            if (n < 1) return lst.ToArray();
-            if (n > CardsHeap.Count + CardsHeap2.Count) throw new NoMoreCard(_game.GamePlayers);
+            List<Card> lst = [];
+            if (n < 1) return [.. lst];
+            if (n > TakingCardsHeap.Count + TrashCardsHeap.Count) throw new NoMoreCard(_game.GamePlayers);
             while (n > 0)
             {
-                if (CardsHeap.Count == 0)
-                    FillCard();
-                lst.Add( CardsHeap.Dequeue());
+                if (TakingCardsHeap.Count == 0)
+                    FillCards();
+                lst.Add( TakingCardsHeap.Dequeue());
                 n--;
             }
-            return lst.ToArray();
+            return [.. lst];
         }
 
         /// <summary>
@@ -595,7 +578,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>若存在则返回true</returns>
         public bool Exist(Card aCard)
         {
-            if (CardsHeap.Contains(aCard) || CardsHeap2.Contains(aCard)) return true;
+            if (TakingCardsHeap.Contains(aCard) || TrashCardsHeap.Contains(aCard)) return true;
             return false;
         }
 
@@ -708,8 +691,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
             AddCard(new Card(102, Card.Suit.Spade, 7, Card.Effect.Sha));
             AddCard(new Card(103, Card.Suit.Heart, 12, Card.Effect.Tao));
             AddCard(new Card(104, Card.Suit.Heart, 12, Card.Effect.GuoHeChaiQiao));
-            CardsHeap2 = new Queue<Card>(CardsHeap2.Distinct().ToArray());
-            TotalCards = CardsHeap2.Count;
+            TrashCardsHeap = new Queue<Card>(TrashCardsHeap.Distinct().ToArray());
+            TotalCards = TrashCardsHeap.Count;
         }
 
         /// <summary>
@@ -721,8 +704,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
             AddCard(new Card(106, Card.Suit.Diamond, 12, Card.Effect.WuXieKeJi));
             AddCard(new Card(107, Card.Suit.Club, 2, Card.Effect.RenWangDun));
             AddCard(new Card(108, Card.Suit.Heart, 12, Card.Effect.ShanDian));
-            CardsHeap2 = new Queue<Card>(CardsHeap2.Distinct().ToArray());
-            TotalCards = CardsHeap2.Count;
+            TrashCardsHeap = new Queue<Card>(TrashCardsHeap.Distinct().ToArray());
+            TotalCards = TrashCardsHeap.Count;
         }
 
         /// <summary>
@@ -782,8 +765,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
             AddCard(new Card(158, Card.Suit.Heart, 2, Card.Effect.HuoGong));
             AddCard(new Card(159, Card.Suit.Club, 4, Card.Effect.BingLiangCunDuan));
             AddCard(new Card(160, Card.Suit.Spade, 10, Card.Effect.BingLiangCunDuan));
-            CardsHeap2 = new Queue<Card>(CardsHeap2.Distinct().ToArray());
-            TotalCards = CardsHeap2.Count;
+            TrashCardsHeap = new Queue<Card>(TrashCardsHeap.Distinct().ToArray());
+            TotalCards = TrashCardsHeap.Count;
         }
 
         /// <summary>
@@ -793,8 +776,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>XML报告</returns>
         public string CardsChecker(SanGuoSha.ServerCore.Contest.Global.GameBase aGame)
         {
-            List<Card> lst = new List<Card>(CardsHeap);
-            lst.AddRange(CardsHeap2);
+            List<Card> lst = new(TakingCardsHeap);
+            lst.AddRange(TrashCardsHeap);
             ChiefBase s = aGame.GamePlayers[-1].Chief;
             if (s != null)
             {
@@ -819,8 +802,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
             {
                 Buff[c.ID]++;
             }
-            Beaver lost = new Beaver();
-            Beaver excess = new Beaver();
+            Beaver lost = [];
+            Beaver excess = [];
             bool normal = true;
             for (int i = 1; i <= TotalCards; i++)
             {
@@ -847,8 +830,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 return new Beaver("cardschecker.wrong_total", lost, excess).ToString();
             return new Beaver("cardschecker").ToString();
         }
-        private Queue<Card> CardsHeap = new Queue<Card>(); //牌堆
-        private Queue<Card> CardsHeap2 = new Queue<Card>(); //弃牌堆
+        private Queue<Card> TakingCardsHeap = new(); //牌堆
+        private Queue<Card> TrashCardsHeap = new(); //弃牌堆
     }
 
 }
