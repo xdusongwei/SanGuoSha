@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Data;
 using System.Collections.Generic;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -25,7 +25,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             //若其中有玩家问询时选择确认(一般指放弃),将其值定位true
             //若所有玩家都是true或超时,表决结束,问询返回None
             //若有玩家出 无懈可击 时,表决问询将直接结束,返回 WuXieKeJi问询
-            Dictionary<Player, bool> abstention = new Dictionary<Player, bool>();
+            Dictionary<Player, bool> abstention = [];
             ChiefBase s = aTarget;
             //遍历场上的玩家
             do

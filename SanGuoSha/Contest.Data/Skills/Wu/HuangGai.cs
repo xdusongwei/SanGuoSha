@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillKuRou : SkillBase
     {
@@ -42,15 +42,15 @@ namespace SanGuoSha.ServerCore.Contest.Data
             return true;
         }
 
-        public override MessageCore.AskForResult AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
         {
             if (aAskFor == MessageCore.AskForEnum.Aggressive && SkillStatus == SkillEnabled.Enable)
             {
                 SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
-                aData.Game.DamageHealth(aChief, 1, null, new GlobalEvent.EventRecoard(aChief, aChief, new Card[] { }, Card.Effect.Skill, SkillName));
-                aData.Game.TakeingCards(aChief, 2);
-                return new MessageCore.AskForResult(false, aChief, new ChiefBase[] { }, new Card[] { }, Card.Effect.Skill, false, false, SkillName);
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
+                aData.Game.DamageHealth(aChief, 1, null, new GlobalEvent.EventRecoard(aChief, aChief, [], Card.Effect.Skill, SkillName));
+                aData.Game.TakingCards(aChief, 2);
+                return new MessageCore.AskForResult(false, aChief, [], [], Card.Effect.Skill, false, false, SkillName);
             }
             return null;
         }

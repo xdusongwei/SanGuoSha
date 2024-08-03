@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillLongTeng : SkillBase
     {
@@ -28,12 +28,12 @@ namespace SanGuoSha.ServerCore.Contest.Data
             }
         }
 
-        public override MessageCore.AskForResult AskFor(SanGuoSha.ServerCore.Contest.Data.ChiefBase aChief, SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForEnum aAskFor, SanGuoSha.ServerCore.Contest.Data.GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(SanGuoSha.Contest.Data.ChiefBase aChief, SanGuoSha.Contest.Global.MessageCore.AskForEnum aAskFor, SanGuoSha.Contest.Data.GlobalData aData)
         {
             if (aData.Game.Response.SkillName == SkillName && SkillStatus == SkillEnabled.Enable)
             {
                 SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, aData.Game.Response.Cards));
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], aData.Game.Response.Cards));
                 return new MessageCore.AskForResult(aData.Game.Response.IsTimeout, aChief, Player.Players2Chiefs(aData.Game.Response.Targets), aData.Game.Response.Cards, Card.Effect.Sha, aData.Game.Response.Answer, true, SkillName);
             }
             return null;

@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Data.GameException;
+using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Data.GameException;
 /*
  * 这里算是个开头吧,现在这里说点东西 
  * 这是个三国杀游戏的核心部分,游戏的所有请求处理和反馈信息都在这里完成
  * 而这个类库的功能,就是服务从这里去开启游戏,并通过给定的玩家接口与回调完成各类操作
  * 玩家访问接口中的方法提交请求,系统从玩家的回调中返回XML消息让玩家了解游戏的动作信息
 */
-//SanGuoSha.ServerCore.Contest.Global命名空间几乎是用来容纳游戏三大服务层面的类的,例如下面的,最顶层的Game类
-namespace SanGuoSha.ServerCore.Contest.Global
+//SanGuoSha.Contest.Global命名空间几乎是用来容纳游戏三大服务层面的类的,例如下面的,最顶层的Game类
+namespace SanGuoSha.Contest.Global
 {
     /// <summary>
     /// 游戏对象,控制游戏的开始并进入游戏循环中

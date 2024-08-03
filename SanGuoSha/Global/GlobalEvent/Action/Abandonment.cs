@@ -1,10 +1,10 @@
-﻿using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+﻿using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using System.Linq;
 using System.Xml.Linq;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -37,7 +37,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 }
 
                 if (res.TimeOut || res.Cards.Count() == 0)
-                    res = new MessageCore.AskForResult(false, aChief, new ChiefBase[0], AutoAbandonment(aChief), Card.Effect.None, false, true, string.Empty);
+                    res = new MessageCore.AskForResult(false, aChief, [], AutoAbandonment(aChief), Card.Effect.None, false, true, string.Empty);
                 //是否超过弃牌数
                 if (GamePlayers[aChief].Hands.Count - res.Cards.Count() < (GamePlayers[aChief].Health < 0 ? 0 : GamePlayers[aChief].Health))
                 {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillWuSheng : SkillBase
     {
@@ -66,7 +66,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             }
         }
 
-        public override MessageCore.AskForResult AskFor(SanGuoSha.ServerCore.Contest.Data.ChiefBase aChief, SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForEnum aAskFor, SanGuoSha.ServerCore.Contest.Data.GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(SanGuoSha.Contest.Data.ChiefBase aChief, SanGuoSha.Contest.Global.MessageCore.AskForEnum aAskFor, SanGuoSha.Contest.Data.GlobalData aData)
         {
             if (aData.Game.Response.SkillName == SkillName && SkillStatus == SkillEnabled.Enable)
             {

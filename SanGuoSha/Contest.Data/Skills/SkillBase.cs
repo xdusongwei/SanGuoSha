@@ -1,16 +1,16 @@
 ﻿/*
  * SkillBase ASkill
- * Namespace SanGuoSha.ServerCore.Contest.Data
+ * Namespace SanGuoSha.Contest.Data
  * 武将技能的定义
 */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 using System.Xml.Linq;
 using BeaverMarkupLanguage;
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     /// <summary>
     /// 技能的基类
@@ -198,7 +198,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <param name="aTarget">受到伤害的目标</param>
         /// <param name="aData">全局游戏对象</param>
         /// <param name="aDamage">伤害量</param>
-        public virtual void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
+        public virtual void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase? aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
         {
 
         }
@@ -223,7 +223,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <param name="aAskFor">问询的内容</param>
         /// <param name="aData">全局游戏数据对象</param>
         /// <returns>成功处理返回effect不是none的askforresult对象,否则返回null,另外根据情形你可以返回两个异常类型</returns>
-        public virtual MessageCore.AskForResult AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
+        public virtual MessageCore.AskForResult? AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
         {
             return null;
         }

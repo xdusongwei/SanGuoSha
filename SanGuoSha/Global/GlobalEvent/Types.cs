@@ -1,9 +1,9 @@
-﻿using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+﻿using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {

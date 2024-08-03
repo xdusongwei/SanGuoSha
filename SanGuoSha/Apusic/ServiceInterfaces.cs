@@ -15,12 +15,12 @@ using System.Text;
 using System.Xml;
 using System.Threading;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Global;
+using SanGuoSha.Contest.Data;
 using BeaverMarkupLanguage;
 
 //这些接口被划归在中间件命名空间中
-namespace SanGuoSha.ServerCore.Contest.Apusic
+namespace SanGuoSha.Contest.Apusic
 {
     /// <summary>
     /// ICallback接口是WCF对象提供给服务的回调接口，即信息发向客户的通道
@@ -215,7 +215,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
         {
             //去重复项
             aIDs = aIDs.Distinct().ToArray();
-            List<Card> ret = new List<Card>();
+            List<Card> ret = [];
             //若target没有引用，那么选择在该玩家手牌，装备区，判定区,牌槽及五谷丰登选择区寻找响应ID
             if (Game.WaittingData.Target == null)
             {
@@ -373,7 +373,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
         /// <returns>武将对象数组</returns>
         private Player[] Names2Players(string[] aNames , Players aPlayers)
         {
-            List<Player> ret = new List<Player>();
+            List<Player> ret = [];
             foreach (string n in aNames)
             {
                 foreach (Player p in aPlayers.All)
@@ -586,7 +586,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                                     if (!found)
                                     {
                                         Game.Response.Effect = Card.Effect.None;
-                                        aCards = new Card[] { };
+                                        aCards = [];
                                     }
                                 }
                             }
@@ -611,7 +611,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                                     if (!found)
                                     {
                                         Game.Response.Effect = Card.Effect.None;
-                                        aCards = new Card[] { };
+                                        aCards = [];
                                     }
                                 }
                             }
@@ -738,7 +738,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                             {
                                 if (ThisPlayer.Weapon != null)
                                 {
-                                    SanGuoSha.ServerCore.Contest.Equipage.Weapon.LeadCards(ThisPlayer.Weapon.CardEffect, aCards, ThisPlayer.Chief, Player.Players2Chiefs(Targets) , MessageCore.AskForEnum.Aggressive, ref Game.Response.Effect, Game.gData);
+                                    SanGuoSha.Contest.Equipage.Weapon.LeadCards(ThisPlayer.Weapon.CardEffect, aCards, ThisPlayer.Chief, Player.Players2Chiefs(Targets) , MessageCore.AskForEnum.Aggressive, ref Game.Response.Effect, Game.gData);
                                 }
                             }
                             //这是最基本的情况,没有使用任何技能且出一张牌
@@ -892,7 +892,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                             }
                             else if(ThisPlayer.Weapon != null )
                             {
-                                SanGuoSha.ServerCore.Contest.Equipage.Weapon.LeadCards(ThisPlayer.Weapon.CardEffect, aCards, ThisPlayer.Chief, Player.Players2Chiefs(Targets), Game.WaittingData.AskFor, ref Game.Response.Effect, Game.gData);
+                                SanGuoSha.Contest.Equipage.Weapon.LeadCards(ThisPlayer.Weapon.CardEffect, aCards, ThisPlayer.Chief, Player.Players2Chiefs(Targets), Game.WaittingData.AskFor, ref Game.Response.Effect, Game.gData);
                             }
                             break;
                     } //switch

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillPaoXiao : SkillBase
     {

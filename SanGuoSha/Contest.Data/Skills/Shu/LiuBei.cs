@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillJiJiang : SkillBase
     {
@@ -69,13 +69,13 @@ namespace SanGuoSha.ServerCore.Contest.Data
             }
         }
 
-        public override MessageCore.AskForResult AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
         {
             if (aData.Game.Response.SkillName == SkillName && aChief.ChiefStatus == ChiefBase.Status.Majesty && (aAskFor == MessageCore.AskForEnum.Sha || aAskFor == MessageCore.AskForEnum.Aggressive) && SkillStatus == SkillEnabled.Enable)
             {
                 SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
                 ChiefBase[] targets = Player.Players2Chiefs(aData.Game.Response.Targets);
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, targets, new Card[] { }));
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, targets, []));
                 ChiefBase t = aChief.Next;
                 
                 while (!t.IsMe(aChief))
@@ -167,14 +167,14 @@ namespace SanGuoSha.ServerCore.Contest.Data
             return true;
         }
 
-        public override MessageCore.AskForResult AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
         {
             if (aData.Game.Response.SkillName == SkillName && SkillStatus == SkillEnabled.Enable && aAskFor == MessageCore.AskForEnum.Aggressive)
             {
                 SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
                 ChiefBase target = aData.Game.Response.Targets[0].Chief;
                 Card[] cards = aData.Game.Response.Cards;
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { target }, new Card[] { }));
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [target], []));
                 TotalCount += aData.Game.Response.Cards.Count();
                 aData.Game.AsynchronousCore.SendGiveMessage(aChief, target, cards, aData.Game.GamePlayers);
                 aData.Game.Move(aChief, target, cards);

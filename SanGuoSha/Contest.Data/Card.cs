@@ -1,14 +1,14 @@
 ﻿/*
  * Card 和 CardHeap
- * Namespace SanGuoSha.ServerCore.Contest.Data
+ * Namespace SanGuoSha.Contest.Data
  * 定义牌和牌堆
 */
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data.GameException;
+using SanGuoSha.Contest.Data.GameException;
 using BeaverMarkupLanguage;
 
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     /// <summary>
     /// 牌类
@@ -377,13 +377,13 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <summary>
         /// 构造牌堆
         /// </summary>
-        public CardHeap(SanGuoSha.ServerCore.Contest.Global.GameBase aGame)
+        public CardHeap(SanGuoSha.Contest.Global.GameBase aGame)
         {
             //_random = new RNGCryptoServiceProvider();
             _game = aGame;
         }
 
-        private SanGuoSha.ServerCore.Contest.Global.GameBase _game = null;
+        private SanGuoSha.Contest.Global.GameBase _game = null;
 
         /// <summary>
         /// 释放对象的非托管资源
@@ -774,7 +774,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// </summary>
         /// <param name="aGame">游戏对象</param>
         /// <returns>XML报告</returns>
-        public string CardsChecker(SanGuoSha.ServerCore.Contest.Global.GameBase aGame)
+        public string CardsChecker(SanGuoSha.Contest.Global.GameBase aGame)
         {
             List<Card> lst = new(TakingCardsHeap);
             lst.AddRange(TrashCardsHeap);

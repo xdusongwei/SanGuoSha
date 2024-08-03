@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillKongCheng : SkillBase
     {
@@ -61,7 +61,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 alive = alive > 5 ? 5 : alive;
                 Card[] cards = aData.Game.CardsHeap.Pop(alive);
                 aChief.SlotsBuffer[Total].Cards.AddRange(cards);
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
                 aData.Game.AsynchronousCore.SendPrivateMessageWithOpenMessage(aChief,
                     new Beaver("askfor.guanxing.cards" , aChief.ChiefName , Card.Cards2Beaver("cards" ,cards)).ToString().ToString(),
                     new Beaver("askfor.guanxing.cards" , aChief.ChiefName).ToString(),
@@ -103,8 +103,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     //    new XElement("down", aChief.SlotsBuffer[Bottom].Cards.Count)
                     //    )
                     //    );
-                aData.Game.CardsHeap.PutOnTop(aChief.SlotsBuffer[Top].Cards.ToArray());
-                aData.Game.CardsHeap.PutOnBottom(aChief.SlotsBuffer[Bottom].Cards.ToArray());
+                aData.Game.CardsHeap.PutOnTop([.. aChief.SlotsBuffer[Top].Cards]);
+                aData.Game.CardsHeap.PutOnBottom([.. aChief.SlotsBuffer[Bottom].Cards]);
                 aChief.SlotsBuffer[Top].Cards.Clear();
                 aChief.SlotsBuffer[Bottom].Cards.Clear();
                 aChief.SlotsBuffer[Total].Cards.Clear();

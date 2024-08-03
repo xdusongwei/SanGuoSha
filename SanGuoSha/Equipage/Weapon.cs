@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Global;
+using SanGuoSha.Contest.Data;
 using BeaverMarkupLanguage;
-namespace SanGuoSha.ServerCore.Contest.Equipage
+namespace SanGuoSha.Contest.Equipage
 {
     internal class Weapon
     {
@@ -219,7 +219,7 @@ namespace SanGuoSha.ServerCore.Contest.Equipage
                                     res = aData.Game.AsynchronousCore.AskForCards(aSource, MessageCore.AskForEnum.TargetCard, aTarget);
                                     if (res.Effect == Card.Effect.None)
                                     {
-                                        res = new MessageCore.AskForResult(false, null, new ChiefBase[] { }, new Card[] { aData.Game.AutoSelect(aTarget) }, Card.Effect.GuoHeChaiQiao, false, true, string.Empty);
+                                        res = new MessageCore.AskForResult(false, null, [], [aData.Game.AutoSelect(aTarget)], Card.Effect.GuoHeChaiQiao, false, true, string.Empty);
                                     }
                                     aData.Game.AsynchronousCore.SendMessage(
                                         MessageCore.MakeDropMessage(aSource ,aTarget , res.Cards ));
@@ -363,7 +363,7 @@ namespace SanGuoSha.ServerCore.Contest.Equipage
                             }
                             if (aData.Game.GamePlayers[aTarget].Hands.Count == 0 || res.Effect == Card.Effect.None)
                             {
-                                aData.Game.TakeingCards(aSource, 1);
+                                aData.Game.TakingCards(aSource, 1);
                             }
                             else
                             {

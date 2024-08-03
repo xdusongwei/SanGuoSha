@@ -1,10 +1,10 @@
-﻿using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+﻿using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using System.Linq;
 using System.Xml.Linq;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -32,7 +32,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 //轮询给每个武将4张牌
                 do
                 {
-                    TakeingCards(loop, 4);
+                    TakingCards(loop, 4);
                     loop = loop.Next;
                 } while (loop != target);
             }
@@ -79,7 +79,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         foreach (ASkill s in target.Skills)
                             s.TakingCards(target, gData);
                         //从牌堆取 gData.TakeCardsCount 张牌
-                        Card[] ret = TakeingCards(target, gData.TakeCardsCount);
+                        Card[] ret = TakingCards(target, gData.TakeCardsCount);
                         //事件结束
                         ClearEventProc();
                     }

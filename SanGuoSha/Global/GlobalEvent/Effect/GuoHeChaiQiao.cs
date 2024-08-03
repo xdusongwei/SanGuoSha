@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Data;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -32,10 +32,10 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 {
                     Card auto = AutoSelect(r.Target);
                     if (auto == null)
-                        res = new MessageCore.AskForResult(false, res.Leader, res.Targets, new Card[0] { }, Card.Effect.GuoHeChaiQiao, false, true, string.Empty);
+                        res = new MessageCore.AskForResult(false, res.Leader, res.Targets, [], Card.Effect.GuoHeChaiQiao, false, true, string.Empty);
                     else
                     {
-                        res = new MessageCore.AskForResult(false, res.Leader, res.Targets, new Card[] { auto }, Card.Effect.GuoHeChaiQiao, false, true, string.Empty);
+                        res = new MessageCore.AskForResult(false, res.Leader, res.Targets, [auto], Card.Effect.GuoHeChaiQiao, false, true, string.Empty);
                     }
                 }
 

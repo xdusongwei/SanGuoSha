@@ -1,11 +1,11 @@
-﻿using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+﻿using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -19,7 +19,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             foreach (Player p in GamePlayers.All)
             {
                 p.Chief = null;
-                p.AvailableChiefs = new ChiefBase[0] { };
+                p.AvailableChiefs = [];
             }
             //发送游戏环境数据给所有玩家
             AsynchronousCore.SendEnvironmentMessage();
@@ -37,7 +37,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             //重置牌堆
             CardsHeap = new CardHeap(this);
             //一个用来放置可选武将的列表
-            List<ChiefBase> heap = new List<ChiefBase>();
+            List<ChiefBase> heap = [];
             //根据模式设置牌堆里面的牌
             switch (Mode)
             {
@@ -56,9 +56,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             //根据扩展包情况加入武将
             heap = ChiefHeap.GetOriginChiefs();
             //主公可选武将列表
-            List<ChiefBase> mLst = new List<ChiefBase>();
-
-            mLst.AddRange(heap.Where(c => c.ChiefName == "刘备" || c.ChiefName == "孙权" || c.ChiefName == "曹操"));
+            List<ChiefBase> mLst = [.. heap.Where(c => c.ChiefName == "刘备" || c.ChiefName == "孙权" || c.ChiefName == "曹操")];
             if (GamePacks.Contains(GamePack.Feng))
             {
                 heap.AddRange(ChiefHeap.GetFengPackChiefs());
@@ -95,7 +93,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             if (r == null)
                 r = new Beaver("chiefs");
             //表决字典
-            Dictionary<Player, bool> Abstention = new Dictionary<Player, bool>();
+            Dictionary<Player, bool> Abstention = [];
             //这个列表用来产生身份序列
             List<int> l = null;
             //按照人数开始配置角色
@@ -144,7 +142,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         //    new XElement("UID", GamePlayers[i2].UID)
                         //    ), false);
                     //设置主公可选武将列表
-                    GamePlayers[m].AvailableChiefs = mLst.ToArray();
+                    GamePlayers[m].AvailableChiefs = [.. mLst];
                     //通知主公选武将
                     AsynchronousCore.SendMessage(
                         new Player[] { GamePlayers[m] },
@@ -190,12 +188,12 @@ namespace SanGuoSha.ServerCore.Contest.Global
                     //heap中去除掉主公选择的武将并重新乱序排列
                     heap = ShuffleList<ChiefBase>(heap.Where(c => c != GamePlayers[m].Chief).ToList());
                     //其他玩家每人抽三个武将到自己的可选武将中
-                    GamePlayers[l1].AvailableChiefs = heap.GetRange(0, 3).ToArray();
-                    GamePlayers[s1].AvailableChiefs = heap.GetRange(3, 3).ToArray();
-                    GamePlayers[i1].AvailableChiefs = heap.GetRange(6, 3).ToArray();
-                    GamePlayers[i2].AvailableChiefs = heap.GetRange(9, 3).ToArray();
+                    GamePlayers[l1].AvailableChiefs = [.. heap.GetRange(0, 3)];
+                    GamePlayers[s1].AvailableChiefs = [.. heap.GetRange(3, 3)];
+                    GamePlayers[i1].AvailableChiefs = [.. heap.GetRange(6, 3)];
+                    GamePlayers[i2].AvailableChiefs = [.. heap.GetRange(9, 3)];
                     //重新设置表决字典,除了主公,其他人都置false
-                    Abstention = new Dictionary<Player, bool>();
+                    Abstention = [];
                     foreach (Player p in GamePlayers.All)
                         if (GamePlayers[m] == p)
                             Abstention.Add(p, true);
@@ -351,7 +349,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         //    new XElement("UID", GamePlayers[i4].UID))
                             , false);
                     //设置主公可选的武将列表
-                    GamePlayers[m].AvailableChiefs = mLst.ToArray();
+                    GamePlayers[m].AvailableChiefs = [.. mLst];
                     //给主公私下发送的选将事件
                     AsynchronousCore.SendMessage(
                         new Player[] { GamePlayers[m] },
@@ -368,7 +366,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         //    new XElement("UID", GamePlayers[m].UID))
                         , true);
                     //设置表决字典,让主公玩家未表决
-                    Abstention = new Dictionary<Player, bool>();
+                    Abstention = [];
                     foreach (Player p in GamePlayers.All)
                         if (GamePlayers[m] == p)
                             Abstention.Add(p, false);
@@ -396,15 +394,15 @@ namespace SanGuoSha.ServerCore.Contest.Global
                     //武将堆排除掉主公选择的武将之后重新排序
                     heap = ShuffleList<ChiefBase>(heap.Where(c => c != GamePlayers[m].Chief).ToList());
                     //其他玩家从heap抽3个武将作为可选武将
-                    GamePlayers[l1].AvailableChiefs = heap.GetRange(0, 3).ToArray();
-                    GamePlayers[l2].AvailableChiefs = heap.GetRange(3, 3).ToArray();
-                    GamePlayers[s1].AvailableChiefs = heap.GetRange(6, 3).ToArray();
-                    GamePlayers[i1].AvailableChiefs = heap.GetRange(9, 3).ToArray();
-                    GamePlayers[i2].AvailableChiefs = heap.GetRange(12, 3).ToArray();
-                    GamePlayers[i3].AvailableChiefs = heap.GetRange(15, 3).ToArray();
-                    GamePlayers[i4].AvailableChiefs = heap.GetRange(18, 3).ToArray();
+                    GamePlayers[l1].AvailableChiefs = [.. heap.GetRange(0, 3)];
+                    GamePlayers[l2].AvailableChiefs = [.. heap.GetRange(3, 3)];
+                    GamePlayers[s1].AvailableChiefs = [.. heap.GetRange(6, 3)];
+                    GamePlayers[i1].AvailableChiefs = [.. heap.GetRange(9, 3)];
+                    GamePlayers[i2].AvailableChiefs = [.. heap.GetRange(12, 3)];
+                    GamePlayers[i3].AvailableChiefs = [.. heap.GetRange(15, 3)];
+                    GamePlayers[i4].AvailableChiefs = [.. heap.GetRange(18, 3)];
                     //设置表决字典,让非主公玩家选将
-                    Abstention = new Dictionary<Player, bool>();
+                    Abstention = [];
                     foreach (Player p in GamePlayers.All)
                         if (GamePlayers[m] == p)
                             Abstention.Add(p, true);

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Global;
+using SanGuoSha.Contest.Data;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Equipage
+namespace SanGuoSha.Contest.Equipage
 {
     /// <summary>
     /// 护甲方法集合
@@ -104,20 +104,20 @@ namespace SanGuoSha.ServerCore.Contest.Equipage
                         if (res.YN == true)
                         {
                             Card ret = aData.Game.popJudgementCard(aOwner, Card.Effect.BaGuaZhen);
-                            aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard , res.SkillName , new Card[] { ret }, Card.Effect.None, aOwner, null, null);
+                            aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard , res.SkillName , [ret], Card.Effect.None, aOwner, null, null);
                             if (ret.CardSuit == Card.Suit.Diamond || ret.CardSuit == Card.Suit.Heart)
                             {
-                                return new MessageCore.AskForResult(false, aOwner, new ChiefBase[0] { }, new Card[] { ret }, Card.Effect.Shan, false, false, string.Empty);
+                                return new MessageCore.AskForResult(false, aOwner, [], [ret], Card.Effect.Shan, false, false, string.Empty);
                             }
                             else
                             {
-                                return new MessageCore.AskForResult(false, aOwner, new ChiefBase[0] { }, new Card[] { ret }, Card.Effect.None, false, false, string.Empty);
+                                return new MessageCore.AskForResult(false, aOwner, [], [ret], Card.Effect.None, false, false, string.Empty);
                             }
                         }
                     }
                     break;
             }
-            return new MessageCore.AskForResult(false, aOwner, new ChiefBase[0] { }, new Card[] { }, Card.Effect.None, false, false, string.Empty);
+            return new MessageCore.AskForResult(false, aOwner, [], [], Card.Effect.None, false, false, string.Empty);
         }
     }
 }

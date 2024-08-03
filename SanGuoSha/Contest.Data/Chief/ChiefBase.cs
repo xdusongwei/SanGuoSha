@@ -1,6 +1,6 @@
 ﻿/*
  * ChiefBase
- * Namespace SanGuoSha.ServerCore.Contest.Data
+ * Namespace SanGuoSha.Contest.Data
  * 武将的定义
 */
 using System;
@@ -10,7 +10,7 @@ using System.Xml.Linq;
 using System.Text;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     /// <summary>
     /// 武将的定义
@@ -49,7 +49,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             ChiefCamp = aCamp;
             playersObject = aPlayers;
             Sex = aSex;
-            Skills = new List<SkillBase>();
+            Skills = [];
             Health = aHealth;
             ChiefStatus = Status.Insurgent;
             SlotsBuffer = new SlotContainer();
@@ -207,9 +207,9 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <param name="aChiefs">武将</param>
         /// <param name="aPlayers">玩家集合</param>
         /// <returns>玩家组成的数组</returns>
-        internal static Player[] Chiefs2Players(ChiefBase[] aChiefs , SanGuoSha.ServerCore.Contest.Data.Players aPlayers)
+        internal static Player[] Chiefs2Players(ChiefBase[] aChiefs , SanGuoSha.Contest.Data.Players aPlayers)
         {
-            List<Player> lst = new List<Player>();
+            List<Player> lst = [];
             if (aChiefs != null)
                 foreach (ChiefBase c in aChiefs)
                 {
@@ -217,7 +217,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     if (p != null)
                         lst.Add(p);
                 }
-            return lst.ToArray();
+            return [.. lst];
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         internal static BeaverMarkupLanguage.Beaver Chiefs2Beaver(string aNodeName, ChiefBase[] aChiefs)
         {
-            Beaver ret = new Beaver();
+            Beaver ret = [];
             foreach (ChiefBase c in aChiefs)
                 ret.Add(string.Empty, c.ChiefName);
             ret.SetHeaderElementName(aNodeName);

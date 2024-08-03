@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
-namespace SanGuoSha.ServerCore.Contest.Global
+using SanGuoSha.Contest.Data;
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {

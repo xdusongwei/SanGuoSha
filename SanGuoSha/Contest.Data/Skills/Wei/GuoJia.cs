@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillTianDu : SkillBase
     {
@@ -15,7 +15,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         public override void OnChiefJudgementCardTakeEffect(ChiefBase aChief, Card aCard, ref bool aEnableSendToBin, GlobalData aData)
         {
             aEnableSendToBin = false;
-            aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { aCard }));
+            aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], [aCard]));
             aData.Game.GamePlayers[aChief].Hands.Add(aCard.GetOriginalCard());
         }
     }
@@ -33,7 +33,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             aChief.SlotsBuffer.Slots.Add(new Slot(SkillName, false, false));
         }
 
-        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
+        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase? aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
         {
             int i = 0;
             for (i = 0; i < aDamage; i++)
@@ -42,15 +42,15 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTarget);
                 if (res.YN)
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, new ChiefBase[] { }, new Card[] { }));
-                    Card[] cards = aData.Game.TakeingCards(aTarget, 2);
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, [], []));
+                    Card[] cards = aData.Game.TakingCards(aTarget, 2);
                     aTarget.SlotsBuffer[SkillName].Cards.Clear();
                     aTarget.SlotsBuffer[SkillName].Cards.AddRange(cards);
                     int times = 0;
                     while (aTarget.SlotsBuffer[SkillName].Cards.Count > 0 && times < 2)
                     {
                         aData.Game.AsynchronousCore.SendPrivateMessageWithOpenMessage(aTarget,
-                            new Beaver("askfor.yiji.cards", aTarget.ChiefName , Card.Cards2Beaver("cards" ,aTarget.SlotsBuffer[SkillName].Cards.ToArray())).ToString(),
+                            new Beaver("askfor.yiji.cards", aTarget.ChiefName , Card.Cards2Beaver("cards" , [.. aTarget.SlotsBuffer[SkillName].Cards])).ToString(),
                             //new XElement("askfor.yiji.cards",
                             //    new XElement("target", aTarget.ChiefName),
                             //    Card.Cards2XML("cards", aTarget.SlotsBuffer[SkillName].Cards.ToArray())

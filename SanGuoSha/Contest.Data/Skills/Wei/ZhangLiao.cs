@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillTuXi : SkillBase
     {
@@ -18,7 +18,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
             if (res.YN)
             {
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
                 res = aData.Game.AsynchronousCore.AskForCardsWithCount(aChief, 0);
                 if (res.Targets.Count() > 2 || res.Targets.Count() == 0)
                 {
@@ -33,8 +33,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 foreach (ChiefBase c in res.Targets)
                 {
                     Card item = aData.Game.AutoSelect(c);
-                    aData.Game.AsynchronousCore.SendStealMessage(c, aChief, new Card[] { item }, aData.Game.GamePlayers);
-                    aData.Game.Move(c, aChief, new Card[] { item });
+                    aData.Game.AsynchronousCore.SendStealMessage(c, aChief, [item], aData.Game.GamePlayers);
+                    aData.Game.Move(c, aChief, [item]);
                     //aData.Game.EventNode(false, GlobalEvent.CardFrom.Hand, SkillName, new Card[] { item }, Card.Effect.None, c, null, null);
                     //aData.Game.GamePlayers[aChief].Hands.Add(item.GetOriginalCard());
                 }

@@ -9,7 +9,7 @@ namespace BeaverMarkupLanguage
     /// </summary>
     public class Beaver : IEnumerable<string>
     {
-        internal static Beaver _default = new Beaver();
+        internal static Beaver _default = [];
 
         /// <summary>
         /// 一个没有内容的Beaver对象
@@ -223,7 +223,7 @@ namespace BeaverMarkupLanguage
             return BeaverEncoder.Encoding(this);
         }
 
-        internal List<Node> lst = new List<Node>();
+        internal List<Node> lst = [];
 
         internal struct Node
         {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillKeJi : SkillBase
     {
@@ -39,7 +39,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
                 if (res.YN)
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
                     aData.Abandonment = false;
                 }
             }

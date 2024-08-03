@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillLuoShen : SkillBase
     {
@@ -17,7 +17,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             {
                 if (aCard.CardSuit == Card.Suit.Club || aCard.CardSuit == Card.Suit.Spade)
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { aCard }));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], [aCard]));
                     aEnableSendToBin = false;
                     aData.Game.GamePlayers[aChief].Hands.Add(aCard.GetOriginalCard());
                 }
@@ -33,9 +33,9 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
                 if (res.YN)
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
                     c = aData.Game.popJudgementCard(aChief, Card.Effect.LuoShen);
-                    aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, res.SkillName, new Card[] { c }, Card.Effect.None, aChief, null, null);
+                    aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, res.SkillName, [c], Card.Effect.None, aChief, null, null);
                 }
             } while (c != null && (c.CardSuit == Card.Suit.Spade || c.CardSuit == Card.Suit.Club));
         }
@@ -81,13 +81,13 @@ namespace SanGuoSha.ServerCore.Contest.Data
             }
         }
 
-        public override MessageCore.AskForResult AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
         {
             if (SkillName == aData.Game.Response.SkillName && SkillStatus == SkillEnabled.Enable)
             {
                 SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, aData.Game.Response.Cards));
-                return new MessageCore.AskForResult(false, aChief, new ChiefBase[] { }, aData.Game.Response.Cards, Card.Effect.Shan, false, true, SkillName);
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], aData.Game.Response.Cards));
+                return new MessageCore.AskForResult(false, aChief, [], aData.Game.Response.Cards, Card.Effect.Shan, false, true, SkillName);
             }
             return null;
         }

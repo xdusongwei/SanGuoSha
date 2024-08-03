@@ -1,6 +1,6 @@
-﻿using SanGuoSha.ServerCore.Contest.Global;
+﻿using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillLuoYi : SkillBase
     {
@@ -18,7 +18,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
             if (res.YN)
             {
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
                 Active = true;
                 aData.TakeCardsCount--;
             }

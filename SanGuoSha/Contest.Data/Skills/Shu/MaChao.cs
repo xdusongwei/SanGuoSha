@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillMaShu : SkillBase
     {
@@ -41,9 +41,9 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
                 if (res.YN)
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
                     Card c = aData.Game.popJudgementCard(aChief, Card.Effect.TieQi);
-                    aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, SkillName, new Card[] { c }, Card.Effect.TieQi, aChief, null, null);
+                    aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, SkillName, [c], Card.Effect.TieQi, aChief, null, null);
                     if (c.CardSuit == Card.Suit.Heart || c.CardSuit == Card.Suit.Diamond)
                     {
                         return 0;

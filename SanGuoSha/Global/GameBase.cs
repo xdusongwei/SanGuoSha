@@ -1,6 +1,6 @@
 ﻿/*
  * GameBase.cs
- * Namespace: SanGuoSha.ServerCore.Contest.Global
+ * Namespace: SanGuoSha.Contest.Global
  * GameBase定义了游戏基类，其中包含了游戏基本数据和游戏功能相关的对象
  * 在这个层面上,数据和扩展功能是这个类主要的描述任务
 */
@@ -8,12 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Data;
 using System.Threading;
-using SanGuoSha.ServerCore.Contest.Apusic;
+using SanGuoSha.Contest.Apusic;
 //using System.Security.Cryptography;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     /// <summary>
     /// 游戏对象的基类
@@ -155,7 +155,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             /// <summary>
             /// 线程问询的内容
             /// </summary>
-            public SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForEnum AskFor;
+            public SanGuoSha.Contest.Global.MessageCore.AskForEnum AskFor;
             /// <summary>
             /// 线程问询的对方,如果是所有人这里应为null
             /// </summary>
@@ -257,7 +257,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 HasResponse = false;
                 IsTimeout = false;
                 SkillName = string.Empty;
-                Cards = new Card[0];
+                Cards = [];
                 Answer = false;
             }
 
@@ -454,7 +454,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <returns>乱序列表</returns>
         internal List<T> ShuffleList<T>(List<T> aList)
         {
-            List<T> ret = new List<T>();
+            List<T> ret = [];
             foreach (T item in aList)
             {
                 ret.Insert(GetRandom(ret.Count + 1), item);

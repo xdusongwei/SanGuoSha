@@ -1,18 +1,18 @@
-﻿using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+﻿using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using System.Linq;
 using System.Xml.Linq;
 using System;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
         public void RefereeProc()
         {
-            string[] winners = new string[0] { };
-            string[] losers = new string[0] { };
-            string[] draws = new string[0] { };
+            string[] winners = [];
+            string[] losers = [];
+            string[] draws = [];
             switch (Mode)
             {
                 case GameMode.FiveSTD:
@@ -31,14 +31,14 @@ namespace SanGuoSha.ServerCore.Contest.Global
                                 //反贼赢
                                 winners = AllPlayers.Where(i => i.Chief.ChiefStatus == ChiefBase.Status.Insurgent).Select(i => i.UID).ToArray();
                                 losers = AllPlayers.Where(i => i.Chief.ChiefStatus != ChiefBase.Status.Insurgent).Select(i => i.UID).ToArray();
-                                throw new SanGuoSha.ServerCore.Contest.Data.GameException.ContestFinished(winners, losers, draws);
+                                throw new SanGuoSha.Contest.Data.GameException.ContestFinished(winners, losers, draws);
                             }
                             else
                             {
                                 //内奸赢
                                 winners = AllPlayers.Where(i => i.Chief.ChiefStatus == ChiefBase.Status.Spy).Select(i => i.UID).ToArray();
                                 losers = AllPlayers.Where(i => i.Chief.ChiefStatus != ChiefBase.Status.Spy).Select(i => i.UID).ToArray();
-                                throw new SanGuoSha.ServerCore.Contest.Data.GameException.ContestFinished(winners, losers, draws);
+                                throw new SanGuoSha.Contest.Data.GameException.ContestFinished(winners, losers, draws);
                             }
                         }
                         else //主公没死
@@ -49,7 +49,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                                 //主忠赢
                                 winners = AllPlayers.Where(i => i.Chief.ChiefStatus == ChiefBase.Status.Majesty || i.Chief.ChiefStatus == ChiefBase.Status.Loyalist).Select(i => i.UID).ToArray();
                                 losers = AllPlayers.Where(i => i.Chief.ChiefStatus != ChiefBase.Status.Majesty && i.Chief.ChiefStatus != ChiefBase.Status.Loyalist).Select(i => i.UID).ToArray();
-                                throw new SanGuoSha.ServerCore.Contest.Data.GameException.ContestFinished(winners, losers, draws);
+                                throw new SanGuoSha.Contest.Data.GameException.ContestFinished(winners, losers, draws);
                             }
                         }
                     }

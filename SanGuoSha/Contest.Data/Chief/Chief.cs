@@ -1,13 +1,13 @@
 ﻿/*
  * 
- * Namespace SanGuoSha.ServerCore.Contest.Data
+ * Namespace SanGuoSha.Contest.Data
  * 各个武将的定义和武将堆
 */
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     /// <summary>
     /// 武将堆,武将堆会按要求的方法产生一批武将对象
@@ -42,7 +42,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>乱序列表</returns>
         public static List<ChiefBase> ShuffleChiefsList(List<ChiefBase> aList)
         {
-            List<ChiefBase> ret = new List<ChiefBase>();
+            List<ChiefBase> ret = [];
             foreach (ChiefBase item in aList)
             {
                 ret.Insert(GetRandom(ret.Count), item);
@@ -56,8 +56,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>一个包含全部林包武将的列表</returns>
         public static List<ChiefBase> GetLinPackChiefs()
         {
-            List<ChiefBase> lst = new List<ChiefBase>();
-            List<ChiefBase> ret = new List<ChiefBase>();
+            List<ChiefBase> lst = [];
+            List<ChiefBase> ret = [];
             lst.Add(new JiaXu(null));
             lst.Add(new DongZhuo(null));
             lst.Add(new LuSu(null));
@@ -79,8 +79,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>一个包含火包的武将列表</returns>
         public static List<ChiefBase> GetHuoPackChiefs()
         {
-            List<ChiefBase> lst = new List<ChiefBase>();
-            List<ChiefBase> ret = new List<ChiefBase>();
+            List<ChiefBase> lst = [];
+            List<ChiefBase> ret = [];
             lst.Add(new YuanShao(null));
             lst.Add(new PangDe(null));
             lst.Add(new YanLiangWenChou(null));
@@ -102,8 +102,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>含有风包武将的列表</returns>
         public static List<ChiefBase> GetFengPackChiefs()
         {
-            List<ChiefBase> lst = new List<ChiefBase>();
-            List<ChiefBase> ret = new List<ChiefBase>();
+            List<ChiefBase> lst = [];
+            List<ChiefBase> ret = [];
             lst.Add(new CaoRen(null));
             lst.Add(new XiaHouYuan(null));
             lst.Add(new YuJi(null));
@@ -125,8 +125,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>一个包含原版武将的列表</returns>
         public static List<ChiefBase> GetOriginChiefs()
         {
-            List<ChiefBase> lst = new List<ChiefBase>();
-            List<ChiefBase> ret = new List<ChiefBase>();
+            List<ChiefBase> lst = [];
+            List<ChiefBase> ret = [];
             lst.Add(new CaoCao(null));
             lst.Add(new XiaHouDun(null));
             lst.Add(new SiMaYi(null));

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillJianXiong : SkillBase
     {
@@ -13,7 +13,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         }
 
-        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
+        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase? aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
         {
             //不能有牌存在，且伤害事件的牌在垃圾桶中
             if (aSourceEvent.Cards.Count() != 0 && aData.Game.HasCardsInBin(aSourceEvent.Cards))
@@ -23,7 +23,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTarget);
                 if (res.YN == true && aData.Game.HasCardsInBin(aSourceEvent.Cards))
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, new ChiefBase[] { }, aSourceEvent.Cards));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, [], aSourceEvent.Cards));
                     aData.Game.PickRubbish(aSourceEvent.Cards);
                     foreach (Card c in aSourceEvent.Cards)
                         aData.Game.GamePlayers[aTarget].Hands.Add(c.GetOriginalCard());
@@ -70,13 +70,13 @@ namespace SanGuoSha.ServerCore.Contest.Data
             return true;
         }
 
-        public override MessageCore.AskForResult AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
         {
             if (aData.Game.Response.SkillName == SkillName && SkillStatus == SkillEnabled.Enable && aChief.ChiefStatus == ChiefBase.Status.Majesty && aAskFor == MessageCore.AskForEnum.Shan)
             {
                 SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
 
-                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
+                aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
                 ChiefBase t = aChief.Next;
                 while (!t.IsMe(aChief))
                 {
@@ -96,7 +96,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                             //    Card.Cards2XML("cards", res2.Cards)
                             //    )
                             //);
-                            return new MessageCore.AskForResult(false, t, new ChiefBase[] { }, res2.Cards, Card.Effect.Shan, false, res2.PlayerLead, SkillName);
+                            return new MessageCore.AskForResult(false, t, [], res2.Cards, Card.Effect.Shan, false, res2.PlayerLead, SkillName);
                         }
                     }
                     t = t.Next;

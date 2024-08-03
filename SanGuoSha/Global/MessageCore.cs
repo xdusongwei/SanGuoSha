@@ -1,6 +1,6 @@
 ﻿/*
  * AskForCore.cs
- * Namespace: SanGuoSha.ServerCore.Contest.Global
+ * Namespace: SanGuoSha.Contest.Global
  * 提供问询系统和消息系统复合的类
 */
 using System;
@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using System.IO;
-using SanGuoSha.ServerCore.Contest.Data.GameException;
+using SanGuoSha.Contest.Data.GameException;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     /// <summary>
     /// 问询和消息系统          
@@ -282,7 +282,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         }
                         catch (SkillFatalError e)
                         {
-                            return new AskForResult(false, aChief, new ChiefBase[] { }, new Card[] { }, Card.Effect.None, false, false, string.Empty);
+                            return new AskForResult(false, aChief, [], [], Card.Effect.None, false, false, string.Empty);
                         }
                         catch (Exception e)
                         {
@@ -337,10 +337,10 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <param name="aChief">武将对象</param>
         internal void LeadingInvalid(ChiefBase aChief)
         {
-            List<int> IDs = new List<int>();
+            List<int> IDs = [];
             foreach(Card c in GB.GamePlayers[aChief].Hands)
                 IDs.Add(c.ID);
-            GB.GamePlayers[aChief].Callback.LeadingInvalid(IDs.ToArray(), GB.GamePlayers[aChief].Weapon == null ? 0 : GB.GamePlayers[aChief].Weapon.ID, GB.GamePlayers[aChief].Armor == null ? 0 : GB.GamePlayers[aChief].Armor.ID,
+            GB.GamePlayers[aChief].Callback.LeadingInvalid([.. IDs], GB.GamePlayers[aChief].Weapon == null ? 0 : GB.GamePlayers[aChief].Weapon.ID, GB.GamePlayers[aChief].Armor == null ? 0 : GB.GamePlayers[aChief].Armor.ID,
                 GB.GamePlayers[aChief].Jia1Ma == null ? 0 : GB.GamePlayers[aChief].Jia1Ma.ID, GB.GamePlayers[aChief].Jian1Ma == null ? 0 : GB.GamePlayers[aChief].Jian1Ma.ID);
         }
 
@@ -403,7 +403,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <param name="aPlayers">玩家集合</param>
         internal void SendStealMessage(ChiefBase aFrom, ChiefBase aTo, Card[] aCards , Players  aPlayers)
         {
-            List<Card> vir = new List<Card>();
+            List<Card> vir = [];
             foreach (Card c in aCards)
             {
                 if (aPlayers[aFrom].Hands.Contains(c))
@@ -411,7 +411,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 else
                     vir.Add(c);
             }
-            SendMessage(aPlayers.All.Where((i) => i.Chief != aFrom && i.Chief != aTo).ToArray(), MessageCore.MakeStealMessage(aFrom, aTo, vir.ToArray()), true);
+            SendMessage(aPlayers.All.Where((i) => i.Chief != aFrom && i.Chief != aTo).ToArray(), MessageCore.MakeStealMessage(aFrom, aTo, [.. vir]), true);
 
             SendMessage(new ChiefBase[] { aFrom, aTo }, MessageCore.MakeStealMessage(aFrom, aTo, aCards), false);
         }
@@ -444,7 +444,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <param name="aPlayers">玩家集合</param>
         internal void SendGiveMessage(ChiefBase aFrom, ChiefBase aTo, Card[] aCards, Players aPlayers)
         {
-            List<Card> vir = new List<Card>();
+            List<Card> vir = [];
             foreach (Card c in aCards)
             {
                 if (aPlayers[aFrom].Hands.Contains(c))
@@ -452,7 +452,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 else
                     vir.Add(c);
             }
-            SendMessage(aPlayers.All.Where((i) => i.Chief != aFrom && i.Chief != aTo).ToArray(), MessageCore.MakeGiveMessage(aFrom, aTo, vir.ToArray()), true);
+            SendMessage(aPlayers.All.Where((i) => i.Chief != aFrom && i.Chief != aTo).ToArray(), MessageCore.MakeGiveMessage(aFrom, aTo, [.. vir]), true);
 
             SendMessage(new ChiefBase[] { aFrom, aTo }, MessageCore.MakeGiveMessage(aFrom, aTo, aCards), false);
         }
@@ -464,15 +464,15 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <returns>XML消息</returns>
         internal string MakeEnvironmentXMLReport(ChiefBase aChief)
         {
-            Beaver env = new Beaver();
-            Beaver players = new Beaver();
-            Beaver chain = new Beaver();
+            Beaver env = [];
+            Beaver players = [];
+            Beaver chain = [];
             Beaver hands = null;
             foreach (Player p in GB.GamePlayers.All)
             {
                 hands = new Beaver("hands");
-                Beaver debuffs = new Beaver();
-                Beaver skills = new Beaver();
+                Beaver debuffs = [];
+                Beaver skills = [];
                 foreach (Card c in p.Debuff)
                     debuffs.Add(string.Empty, new Beaver(c.CardEffect.ToString(), c.ID));
                         //new XElement("effect", c.CardEffect),
@@ -500,10 +500,18 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 }
                 if (p.Chief != null && p.Chief == aChief)
                 {
-                    Beaver player = new Beaver();
-                    player.Add(string.Empty , p.UID , p.PlayerName , p.Dead.ToString() , p.MaxHealth.ToString() , p.Health.ToString());
-                    player.Add(string.Empty , hands , debuffs, skills ,p.Chief == null ? string.Empty : p.Chief.ChiefName,
-                        p.Chief != null && p.Chief.ChiefStatus == ChiefBase.Status.Majesty ? ChiefBase.Status.Majesty.ToString() : p.Chief != null && p.Dead ? p.Chief.ChiefStatus.ToString() : ChiefBase.Status.Unknown.ToString());
+                    Beaver player = new Beaver
+                    {
+                        { string.Empty, p.UID, p.PlayerName, p.Dead.ToString(), p.MaxHealth.ToString(), p.Health.ToString() },
+                        {
+                            string.Empty,
+                            hands,
+                            debuffs,
+                            skills,
+                            p.Chief == null ? string.Empty : p.Chief.ChiefName,
+                            p.Chief != null && p.Chief.ChiefStatus == ChiefBase.Status.Majesty ? ChiefBase.Status.Majesty.ToString() : p.Chief != null && p.Dead ? p.Chief.ChiefStatus.ToString() : ChiefBase.Status.Unknown.ToString()
+                        }
+                    };
                     if(p.Weapon != null ) 
                         player.Add("weapon" , p.Weapon.ID);
                     if(p.Armor != null )
@@ -532,10 +540,18 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 }
                 else
                 {
-                    Beaver player = new Beaver();
-                    player.Add(string.Empty, p.UID, p.PlayerName, p.Dead.ToString(), p.MaxHealth.ToString(), p.Health.ToString());
-                    player.Add(string.Empty, p.Hands.Count, debuffs, skills, p.Chief == null ? string.Empty : p.Chief.ChiefName,
-                        p.Chief != null && p.Chief.ChiefStatus == ChiefBase.Status.Majesty ? ChiefBase.Status.Majesty.ToString() : p.Chief != null && p.Dead ? p.Chief.ChiefStatus.ToString() : ChiefBase.Status.Unknown.ToString());
+                    Beaver player = new Beaver
+                    {
+                        { string.Empty, p.UID, p.PlayerName, p.Dead.ToString(), p.MaxHealth.ToString(), p.Health.ToString() },
+                        {
+                            string.Empty,
+                            p.Hands.Count,
+                            debuffs,
+                            skills,
+                            p.Chief == null ? string.Empty : p.Chief.ChiefName,
+                            p.Chief != null && p.Chief.ChiefStatus == ChiefBase.Status.Majesty ? ChiefBase.Status.Majesty.ToString() : p.Chief != null && p.Dead ? p.Chief.ChiefStatus.ToString() : ChiefBase.Status.Unknown.ToString()
+                        }
+                    };
                     if (p.Weapon != null)
                         player.Add("weapon", p.Weapon.ID);
                     if (p.Armor != null)
@@ -595,7 +611,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <returns>Beaver对象</returns>
         private Beaver MakeHandMessage(Player aPlayer)
         {
-            Beaver ret = new Beaver();
+            Beaver ret = [];
             foreach (Card c in aPlayer.Hands)
             {
                 ret.Add(string.Empty, c.ID);

@@ -23,7 +23,7 @@ namespace BeaverMarkupLanguage
             {
                 throw new ArgumentException("beaver解析时发现\'<\'不能找到匹配");
             }
-            return DecodingFunc(new Beaver(), aCode.Substring(1 , aCode.Length -2 ));
+            return DecodingFunc([], aCode.Substring(1 , aCode.Length -2 ));
         }
 
         private static Beaver DecodingFunc(Beaver aRoot, string aCode)
@@ -41,7 +41,7 @@ namespace BeaverMarkupLanguage
                         {
                             throw new ArgumentException("beaver解析时发现\'[\'不能找到匹配");
                         }
-                        aRoot = aRoot.AddNoEsc(name, DecodingFunc(new Beaver(), aCode.Substring(curr + 1, gt - curr - 1)));
+                        aRoot = aRoot.AddNoEsc(name, DecodingFunc([], aCode.Substring(curr + 1, gt - curr - 1)));
                         start = curr = gt + 2;
                         name = string.Empty;
                         break;

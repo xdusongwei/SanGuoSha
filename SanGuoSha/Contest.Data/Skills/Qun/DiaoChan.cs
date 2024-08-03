@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillLiJian : SkillBase
     {
@@ -35,7 +35,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             return true;
         }
 
-        public override MessageCore.AskForResult AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
+        public override MessageCore.AskForResult? AskFor(ChiefBase aChief, MessageCore.AskForEnum aAskFor, GlobalData aData)
         {
             if (aData.Game.Response.SkillName == SkillName)
             {
@@ -44,7 +44,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, Player.Players2Chiefs(aData.Game.Response.Targets), aData.Game.Response.Cards));
                     aData.Game.DropCards(true, GlobalEvent.CardFrom.Hand, SkillName, aData.Game.Response.Cards, Card.Effect.Skill, aChief, null, null);
-                    return new MessageCore.AskForResult(false, aChief, new ChiefBase[] { aData.Game.Response.Targets[0].Chief , aData.Game.Response.Targets[1].Chief }, new Card[] { }, Card.Effect.JueDou, false, false, SkillName);
+                    return new MessageCore.AskForResult(false, aChief, [aData.Game.Response.Targets[0].Chief , aData.Game.Response.Targets[1].Chief], [], Card.Effect.JueDou, false, false, SkillName);
                 }
             }
             return null;
@@ -69,8 +69,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         public override void AfterTurnEnd(ChiefBase aChief, GlobalData aData)
         {
-            aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief , this , new ChiefBase[]{} , new Card[]{}));
-            aData.Game.TakeingCards(aChief, 1);
+            aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief , this , [] , []));
+            aData.Game.TakingCards(aChief, 1);
         }
     }
 }

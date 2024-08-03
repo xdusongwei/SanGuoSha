@@ -1,10 +1,10 @@
-﻿using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+﻿using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using System.Linq;
 using System.Xml.Linq;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -45,7 +45,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             {
                     //技能处理过的回应,那这里就不处理他了
                 case Card.Effect.Skill:
-                    DropCards(true, CardFrom.Slot, string.Empty, CardsBuffer[WGFDSlotName].Cards.ToArray(), Card.Effect.None, null, null, null);
+                    DropCards(true, CardFrom.Slot, string.Empty, [.. CardsBuffer[WGFDSlotName].Cards], Card.Effect.None, null, null, null);
                     CardsBuffer[WGFDSlotName].Cards.Clear();
                     //释放打牌列表,将这些牌放进弃牌堆
                     FreeCardBin();
@@ -369,7 +369,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                     CardsBuffer[WGFDSlotName].Cards.Clear();
                     CardsBuffer[WGFDSlotName].Cards.AddRange(CardsHeap.Pop(GamePlayers.PeoplealiveCount));
                     AsynchronousCore.SendMessage(
-                        new Beaver("wgfd", aChiefSource.ChiefName , aResult.SkillName , Card.Cards2Beaver("cards" , CardsBuffer[WGFDSlotName].Cards.ToArray())).ToString());
+                        new Beaver("wgfd", aChiefSource.ChiefName , aResult.SkillName , Card.Cards2Beaver("cards" , [.. CardsBuffer[WGFDSlotName].Cards])).ToString());
                         //new XElement("wgfd",
                         //new XElement("from", aChiefSource.ChiefName),
                         //new XElement("skill", aResult.SkillName),
@@ -456,7 +456,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 lstRecoard.Clear();
             }
             //删除五谷丰登牌堆中的牌
-            DropCards(true, CardFrom.Slot, string.Empty, CardsBuffer[WGFDSlotName].Cards.ToArray(), Card.Effect.None, null, null, null);
+            DropCards(true, CardFrom.Slot, string.Empty, [.. CardsBuffer[WGFDSlotName].Cards], Card.Effect.None, null, null, null);
             CardsBuffer[WGFDSlotName].Cards.Clear();
             //释放打牌列表,将这些牌放进弃牌堆
             FreeCardBin();
@@ -470,7 +470,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             return true;
         FAILED:
             AsynchronousCore.LeadingInvalid(aChiefSource);
-            DropCards(true, CardFrom.Slot, string.Empty, CardsBuffer[WGFDSlotName].Cards.ToArray(), Card.Effect.None, null, null, null);
+            DropCards(true, CardFrom.Slot, string.Empty, [.. CardsBuffer[WGFDSlotName].Cards], Card.Effect.None, null, null, null);
             CardsBuffer[WGFDSlotName].Cards.Clear();
             //释放打牌列表,将这些牌放进弃牌堆
             FreeCardBin();

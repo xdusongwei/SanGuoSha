@@ -1,6 +1,6 @@
 ﻿/*
  * GlobalEvent.cs
- * Namespace: SanGuoSha.ServerCore.Contest.Global
+ * Namespace: SanGuoSha.Contest.Global
  * GlobalEvent类继承GameBase类,与GameBase类的数据和组件任务不同,GlobalEvent类作为一般效果的处理区域
  * 同时,GlobalEvent是一个巨大的方法集,也是三层框架中的方法层,所以描述每一个方法都显得很必要,
  * 它的很多方法被分割成其他文件放置在GlobalEvent文件夹内,但是同属GlobalEvent类
@@ -18,11 +18,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Equipage;
+using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Equipage;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     /// <summary>
     /// 游戏对象的中间层基类,方法层
@@ -46,7 +46,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <param name="aPreDefunct">求救武将</param>
         /// <param name="aRescuePoint">求救血量</param>
         /// <returns>返回true表示该角色求救失败,false表示求救成功</returns>
-        private bool Cry4HelpProc(ChiefBase aChiefSource, ChiefBase aPreDefunct, sbyte aRescuePoint)
+        private bool Cry4HelpProc(ChiefBase? aChiefSource, ChiefBase aPreDefunct, sbyte aRescuePoint)
         {
             if (aPreDefunct == null || aRescuePoint < 1) return true;
             ChiefBase start = aChiefSource != null ? aChiefSource : aPreDefunct;
@@ -245,7 +245,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             foreach(Slot s in CardsBuffer.Slots)
                 if (s.Recyclable && s.Cards.Count != 0)
                 {
-                    DropCards(true, CardFrom.Slot, string.Empty, s.Cards.ToArray(), Card.Effect.None, null, null, null);
+                    DropCards(true, CardFrom.Slot, string.Empty, [.. s.Cards], Card.Effect.None, null, null, null);
                     s.Cards.Clear();
                 }
             //尝试回收玩家牌槽容器中的牌
@@ -255,7 +255,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                     foreach (Slot s in p.Chief.SlotsBuffer.Slots)
                         if (s.Recyclable && s.Cards.Count != 0)
                         {
-                            DropCards(true, CardFrom.Slot, string.Empty, s.Cards.ToArray(), Card.Effect.None, null, null, null);
+                            DropCards(true, CardFrom.Slot, string.Empty, [.. s.Cards], Card.Effect.None, null, null, null);
                             s.Cards.Clear();
                         }
             }
@@ -276,7 +276,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             if (!CheckValid(aResult, aChief))
             {
                 AsynchronousCore.LeadingInvalid(aChief);
-                aResult = new MessageCore.AskForResult(false, aResult.Leader, new ChiefBase[] { }, new Card[] { }, Card.Effect.None, false, true, string.Empty);
+                aResult = new MessageCore.AskForResult(false, aResult.Leader, [], [], Card.Effect.None, false, true, string.Empty);
             }
             else
                 AsynchronousCore.LeadingValid(aChief);
@@ -290,8 +290,8 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <returns>返回牌数组</returns>
         private Card[] AutoAbandonment(ChiefBase aChief)
         {
-            if (GamePlayers[aChief].Hands.Count <= GamePlayers[aChief].Health) return new Card[0];
-            return GamePlayers[aChief].Hands.GetRange(0, GamePlayers[aChief].Hands.Count - GamePlayers[aChief].Health).ToArray();
+            if (GamePlayers[aChief].Hands.Count <= GamePlayers[aChief].Health) return [];
+            return [.. GamePlayers[aChief].Hands.GetRange(0, GamePlayers[aChief].Hands.Count - GamePlayers[aChief].Health)];
         }
 
 
@@ -344,7 +344,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         {
             Card c = CardsHeap.Pop(); //取一张牌
             AsynchronousCore.SendMessage(
-                new Beaver("judgmentcard", aChief.ChiefName, aEffect.ToString(), Card.Cards2Beaver("cards", new Card[] { c })).ToString());
+                new Beaver("judgmentcard", aChief.ChiefName, aEffect.ToString(), Card.Cards2Beaver("cards", [c])).ToString());
                 //new XElement("judgmentcard",
                 //    new XElement("target", aChief.ChiefName),
                 //    new XElement("effect", aEffect),
@@ -400,7 +400,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
 
         private Beaver Chiefs2Beaver(int aIndex)
         {
-            Beaver ret = new Beaver();
+            Beaver ret = [];
             foreach (ChiefBase c in GamePlayers[aIndex].AvailableChiefs)
                 ret.Add(string.Empty, c.ChiefName);
             ret.SetHeaderElementName("chiefs");
@@ -490,7 +490,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <param name="aDamage">伤害量</param>
         /// <param name="aSource">伤害来源,非玩家操作置null</param>
         /// <param name="aSourceEvent">伤害来源事件</param>
-        internal void DamageHealth(ChiefBase aChief, sbyte aDamage , ChiefBase aSource, EventRecoard aSourceEvent)
+        internal void DamageHealth(ChiefBase aChief, sbyte aDamage , ChiefBase? aSource, EventRecoard aSourceEvent)
         {
             if (GamePlayers[aChief].Health - aDamage < 1)
             {
@@ -507,9 +507,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                     //GamePlayers[aChief].Health = 0;
                     GamePlayers[aChief].Dead = true;
                     //drop all cards
-                    List<Card> lstDrop = new List<Card>();
-                    lstDrop.AddRange(GamePlayers[aChief].Hands);
-                    lstDrop.AddRange(GamePlayers[aChief].Debuff);
+                    List<Card> lstDrop = [.. GamePlayers[aChief].Hands, .. GamePlayers[aChief].Debuff];
                     if (GamePlayers[aChief].Weapon != null)
                         lstDrop.Add(GamePlayers[aChief].Weapon);
                     if (GamePlayers[aChief].Armor != null)
@@ -525,12 +523,12 @@ namespace SanGuoSha.ServerCore.Contest.Global
                         //    new XElement("status", aChief.ChiefStatus)
                         //    )
                         //);
-                    AsynchronousCore.SendMessage(MessageCore.MakeDropMessage(aChief, aChief, lstDrop.ToArray()));
-                    DropCards(true, CardFrom.HandAndEquipageAndJudgement, string.Empty, lstDrop.ToArray(), Card.Effect.None, aChief, null, null);
+                    AsynchronousCore.SendMessage(MessageCore.MakeDropMessage(aChief, aChief, [.. lstDrop]));
+                    DropCards(true, CardFrom.HandAndEquipageAndJudgement, string.Empty, [.. lstDrop], Card.Effect.None, aChief, null, null);
                     RefereeProc();
                     if (aChief.ChiefStatus == ChiefBase.Status.Insurgent && aSource != null && !GamePlayers[aSource].Dead)
                     {
-                        TakeingCards(aSource, 3);
+                        TakingCards(aSource, 3);
                     }
                     return;
                 }
@@ -571,7 +569,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// </summary>
         private void FreeCardBin()
         {
-            CardsHeap.AddCards(lstCardBin.ToArray());
+            CardsHeap.AddCards([.. lstCardBin]);
             lstCardBin.Clear();
         }
 
@@ -588,7 +586,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             {
                 if (!GamePlayers[aChief].Hands.Contains(c)) return false;
             }
-            List<Card> old = GamePlayers[aChief].Hands.ToList();
+            List<Card> old = [.. GamePlayers[aChief].Hands];
             foreach (Card c in aCards)
             {
                 if (!GamePlayers[aChief].RemoveHand(c))
@@ -613,7 +611,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
             Card armor = GamePlayers[aChief].Armor;
             Card Jia1 = GamePlayers[aChief].Jia1Ma;
             Card Jian1 = GamePlayers[aChief].Jian1Ma;
-            List<Card> oldHand = GamePlayers[aChief].Hands.ToList();
+            List<Card> oldHand = [.. GamePlayers[aChief].Hands];
             Stack<Card> oldDebuff = new Stack<Card>(GamePlayers[aChief].Debuff);
             foreach (Card c in aCards)
             {
@@ -665,10 +663,10 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <param name="aChief">武将对象</param>
         /// <param name="n">拿牌的数量</param>
         /// <returns>牌的数组</returns>
-        internal Card[] TakeingCards(ChiefBase aChief, int n)
+        internal Card[] TakingCards(ChiefBase aChief, int n)
         {
-            if (n <= 0) return new Card[] { };
-            if (GamePlayers[aChief].Dead) return new Card[] { };
+            if (n <= 0) return [];
+            if (GamePlayers[aChief].Dead) return [];
             Card[] ret = CardsHeap.Pop(n);
             GamePlayers[aChief].Hands.AddRange(ret);
             AsynchronousCore.SendPrivateMessageWithOpenMessage(aChief, new Beaver("takecards", aChief.ChiefName, Card.Cards2Beaver("cards", ret)).ToString(), new Beaver("takecards", aChief.ChiefName, n.ToString(), GamePlayers[aChief].Hands.Count.ToString()).ToString(), GamePlayers);
@@ -695,7 +693,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <returns>如果所有的牌都能从垃圾桶中找到,那么返回true</returns>
         internal bool PickRubbish(Card[] aCards)
         {
-            List<Card> copy = lstCardBin.ToList();
+            List<Card> copy = [.. lstCardBin];
             foreach (Card c in aCards)
                 if (!lstCardBin.Remove(c))
                 {
@@ -716,12 +714,12 @@ namespace SanGuoSha.ServerCore.Contest.Global
         /// <summary>
         /// 子事件的处理链表
         /// </summary>
-        internal List<EventRecoard> lstRecoard = new List<EventRecoard>();
+        internal List<EventRecoard> lstRecoard = [];
 
         /// <summary>
         /// 事件中需要回收的牌
         /// </summary>
-        private List<Card> lstCardBin = new List<Card>();
+        private List<Card> lstCardBin = [];
 
         #endregion
     }

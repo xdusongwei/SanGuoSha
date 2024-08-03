@@ -1,15 +1,15 @@
 ﻿/*
  *  GlobalData
- *  Namespace SanGuoSha.ServerCore.Contest.Data
+ *  Namespace SanGuoSha.Contest.Data
  *  游戏动态控制数据
 */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     /// <summary>
     /// 游戏数据

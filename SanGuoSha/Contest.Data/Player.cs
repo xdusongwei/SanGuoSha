@@ -1,18 +1,18 @@
 ﻿/*
  * Player Players
- * Namespace SanGuoSha.ServerCore.Contest.Data
+ * Namespace SanGuoSha.Contest.Data
  * 玩家和玩家集合的定义
 */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SanGuoSha.ServerCore.Contest.Global;
-using SanGuoSha.ServerCore.Contest.Apusic;
+using SanGuoSha.Contest.Global;
+using SanGuoSha.Contest.Apusic;
 using System.Xml.Linq;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     /// <summary>
     /// 玩家
@@ -270,10 +270,10 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (Jian1Ma != null)
             {
-                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, new Card[] { Jian1Ma }, Card.Effect.None, Chief, null, null);
+                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, [Jian1Ma], Card.Effect.None, Chief, null, null);
             }
             Jian1Ma = aHorse;
-            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , new Card[] { aHorse }, aHorse.CardEffect, Chief, Chief, null);
+            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , [aHorse], aHorse.CardEffect, Chief, Chief, null);
         }
 
         /// <summary>
@@ -298,10 +298,10 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (Jia1Ma != null)
             {
-                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, new Card[] { Jia1Ma }, Card.Effect.None, Chief, null, null);
+                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, [Jia1Ma], Card.Effect.None, Chief, null, null);
             }
             Jia1Ma = aHorse;
-            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , new Card[] { aHorse }, aHorse.CardEffect, Chief, Chief, null);
+            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , [aHorse], aHorse.CardEffect, Chief, Chief, null);
         }
 
         /// <summary>
@@ -326,12 +326,12 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (Weapon != null)
             {
-                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, new Card[] { Weapon }, Card.Effect.None, Chief, null, null);
+                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, [Weapon], Card.Effect.None, Chief, null, null);
             }
             Weapon = aWeapon;
-            SanGuoSha.ServerCore.Contest.Equipage.Weapon.ActiveWeapon(Weapon.CardEffect, aData);
+            SanGuoSha.Contest.Equipage.Weapon.ActiveWeapon(Weapon.CardEffect, aData);
             aData.Game.AsynchronousCore.SendMessage(
-                    new Beaver("weapon.load", Chief.ChiefName, aWeapon.CardEffect.ToString(), Card.Cards2Beaver("cards", new Card[] { aWeapon })).ToString());
+                    new Beaver("weapon.load", Chief.ChiefName, aWeapon.CardEffect.ToString(), Card.Cards2Beaver("cards", [aWeapon])).ToString());
                     //new XElement("weapon.load",
                     //    new XElement("target", Chief.ChiefName),
                     //    new XElement("effect" , aWeapon.CardEffect),
@@ -340,7 +340,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     //);
             foreach (ASkill s in Chief.Skills)
                 s.WeaponUpdated(Chief, Weapon ,aData);
-            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , new Card[] { aWeapon }, aWeapon.CardEffect, Chief, Chief, null);
+            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , [aWeapon], aWeapon.CardEffect, Chief, Chief, null);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (Weapon != null)
             {
-                SanGuoSha.ServerCore.Contest.Equipage.Weapon.UnloadWeapon(Weapon.CardEffect, aData);
+                SanGuoSha.Contest.Equipage.Weapon.UnloadWeapon(Weapon.CardEffect, aData);
                 Weapon = null;
                 foreach (ASkill s in Chief.Skills)
                     s.WeaponUpdated(Chief, Weapon, aData);
@@ -394,9 +394,9 @@ namespace SanGuoSha.ServerCore.Contest.Data
         internal void LoadArmor(Card aArmor , GlobalEvent aObj)
         {
             if (Armor != null)
-                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, new Card[] { Armor }, Card.Effect.None, Chief, null, null);
+                aObj.DropCards(true, GlobalEvent.CardFrom.Equipage, string.Empty, [Armor], Card.Effect.None, Chief, null, null);
             aObj.AsynchronousCore.SendMessage(
-                    new Beaver("armor.load", Chief.ChiefName , aArmor.CardEffect.ToString() , Card.Cards2Beaver("cards" , new Card[]{aArmor})).ToString());
+                    new Beaver("armor.load", Chief.ChiefName , aArmor.CardEffect.ToString() , Card.Cards2Beaver("cards" , [aArmor])).ToString());
                     //new XElement("armor.load",
                     //    new XElement("target", Chief.ChiefName),
                     //    new XElement("effect", aArmor.CardEffect),
@@ -404,7 +404,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                     //)
                     //);
             Armor = aArmor;
-            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , new Card[] { aArmor }, aArmor.CardEffect, Chief, Chief, null);
+            aObj.DropCards(false, GlobalEvent.CardFrom.None, string.Empty , [aArmor], aArmor.CardEffect, Chief, Chief, null);
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (Armor != null)
             {
-                SanGuoSha.ServerCore.Contest.Equipage.Armor.OnUnloadAromor(Armor.CardEffect, aObj.gData);
+                SanGuoSha.Contest.Equipage.Armor.OnUnloadAromor(Armor.CardEffect, aObj.gData);
                 Armor = null;
             }
         }
@@ -428,14 +428,14 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <param name="aService">服务接口</param>
         public Player(GameBase aGame, ICallback aCallback , IService aService)
         {
-            Messages = new List<string>();
-            Hands = new List<Card>();
+            Messages = [];
+            Hands = [];
             Debuff = new Stack<Card>();
             Callback = aCallback;
             Service = aService;
             HorizontalSet = false;
             TurnSet = false;
-            AvailableChiefs = new ChiefBase[0] { };
+            AvailableChiefs = [];
         }
 
         /// <summary>
@@ -449,15 +449,15 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (aGame == null) throw new Exception("Game is null");
             if (aCallback == null) throw new Exception("Service Or Callback is null");
-            Messages = new List<string>();
-            Hands = new List<Card>();
+            Messages = [];
+            Hands = [];
             Debuff = new Stack<Card>();
             Callback = aCallback;
             ServiceCore svr = new ServiceCore(this, aGame);
             Service = svr;
             HorizontalSet = false;
             TurnSet = false;
-            AvailableChiefs = new ChiefBase[0] { };
+            AvailableChiefs = [];
             UID = aUID;
             PlayerName = aUName;
         }
@@ -474,8 +474,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             if (aGame == null) throw new Exception("Game is null");
             if (aService == null || aCallback == null) throw new Exception("Service Or Callback is null");
-            Messages = new List<string>();
-            Hands = new List<Card>();
+            Messages = [];
+            Hands = [];
             Debuff = new Stack<Card>();
             Callback = aCallback;
             ((ServiceCore)aService).Game = aGame;
@@ -483,7 +483,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
             Service = aService;
             HorizontalSet = false;
             TurnSet = false;
-            AvailableChiefs = new ChiefBase[0] { };
+            AvailableChiefs = [];
             UID = aUID;
             PlayerName = aUName;
         }
@@ -610,12 +610,12 @@ namespace SanGuoSha.ServerCore.Contest.Data
         /// <returns>武将数组</returns>
         internal static ChiefBase[] Players2Chiefs(Player[] aPlayers)
         {
-            List<ChiefBase> lst = new List<ChiefBase>();
+            List<ChiefBase> lst = [];
             if (aPlayers != null)
                 foreach (Player p in aPlayers)
                     if (p.Chief != null)
                         lst.Add(p.Chief);
-            return lst.ToArray();
+            return [.. lst];
         }
 #endregion
     }
@@ -625,7 +625,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
     /// </summary>
     public class Players
     {
-        private volatile List<Player> PlayerList = new List<Player>();
+        private volatile List<Player> PlayerList = [];
 
         /// <summary>
         /// 返回由所有玩家构成的数组
@@ -634,7 +634,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
         {
             get
             {
-                return PlayerList.ToArray();
+                return [.. PlayerList];
             }
         }
 

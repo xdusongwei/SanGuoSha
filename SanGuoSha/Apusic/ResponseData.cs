@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Data;
 
-namespace SanGuoSha.ServerCore.Contest.Apusic
+namespace SanGuoSha.Contest.Apusic
 {
     
 }

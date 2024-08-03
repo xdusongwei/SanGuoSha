@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillXiaoJi : SkillBase
     {
@@ -17,8 +17,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         public override void DropEquipage(ChiefBase aChief, GlobalData aData)
         {
-            aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { }, new Card[] { }));
-            aData.Game.TakeingCards(aChief, 2);
+            aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));
+            aData.Game.TakingCards(aChief, 2);
         }
     }
 
@@ -57,14 +57,14 @@ namespace SanGuoSha.ServerCore.Contest.Data
             return true;
         }
 
-        public override SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForResult AskFor(SanGuoSha.ServerCore.Contest.Data.ChiefBase aChief, SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForEnum aAskFor, SanGuoSha.ServerCore.Contest.Data.GlobalData aData)
+        public override SanGuoSha.Contest.Global.MessageCore.AskForResult? AskFor(SanGuoSha.Contest.Data.ChiefBase aChief, SanGuoSha.Contest.Global.MessageCore.AskForEnum aAskFor, SanGuoSha.Contest.Data.GlobalData aData)
         {
             if (aData.Game.Response.SkillName == SkillName)
             {
                 if (SkillStatus == SkillEnabled.Enable)
                 {
                     SwitchSkillStatus(aChief, SkillEnabled.Disable, aData);
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, new ChiefBase[] { aData.Game.Response.Targets[0].Chief }, aData.Game.Response.Cards));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [aData.Game.Response.Targets[0].Chief], aData.Game.Response.Cards));
                     aData.Game.DropCards(true, GlobalEvent.CardFrom.Hand, SkillName, aData.Game.Response.Cards, Card.Effect.Skill, aChief, null, null);
                     aData.Game.RegainHealth(aData.Game.Response.Targets[0].Chief, 1);
                     aData.Game.RegainHealth(aChief, 1);

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillGangLie : SkillBase
     {
@@ -13,7 +13,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         }
 
-        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
+        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase? aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
         {
             if (aSource != null)
             {
@@ -21,15 +21,15 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTarget);
                 if (res.YN == true)
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, new ChiefBase[] { aSource }, new Card[] { }));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, [aSource], []));
                     Card judgement = aData.Game.popJudgementCard(aTarget, Card.Effect.GangLie);
-                    aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, res.SkillName, new Card[] { judgement }, Card.Effect.GangLie, aTarget, aSource, null);
+                    aData.Game.DropCards(true, GlobalEvent.CardFrom.JudgementCard, res.SkillName, [judgement], Card.Effect.GangLie, aTarget, aSource, null);
 
                     if (judgement.CardSuit != Card.Suit.Heart)
                     {
                         if (aData.Game.GamePlayers[aSource].Hands.Count < 2)
                         {
-                            aData.Game.DamageHealth(aSource, 1, aTarget, new GlobalEvent.EventRecoard(aTarget, aSource, new Card[] { }, Card.Effect.None, res.SkillName));
+                            aData.Game.DamageHealth(aSource, 1, aTarget, new GlobalEvent.EventRecoard(aTarget, aSource, [], Card.Effect.None, res.SkillName));
                         }
                         else
                         {
@@ -37,7 +37,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
                             res = aData.Game.AsynchronousCore.AskForCardsWithCount(aSource, 2);
                             if (res.Cards.Count() != 2)
                             {
-                                aData.Game.DamageHealth(aSource, 1, aTarget, new GlobalEvent.EventRecoard(aTarget, aSource, new Card[] { }, Card.Effect.None, res.SkillName));
+                                aData.Game.DamageHealth(aSource, 1, aTarget, new GlobalEvent.EventRecoard(aTarget, aSource, [], Card.Effect.None, res.SkillName));
                             }
                             else
                             {

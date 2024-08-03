@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Data;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -32,9 +32,9 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 {
                     //获得对方的武器对象
                     Card weapon = GamePlayers[r.Target].Weapon;
-                    Move(r.Target, r.Source, new Card[] { weapon });
+                    Move(r.Target, r.Source, [weapon]);
                     //玩家得到武器牌
-                    AsynchronousCore.SendMessage(MessageCore.MakeStealMessage(r.Target, r.Source, new Card[] { weapon }));
+                    AsynchronousCore.SendMessage(MessageCore.MakeStealMessage(r.Target, r.Source, [weapon]));
                         //new XElement("steal",
                         //    new XElement("from", r.Target.ChiefName),
                         //    new XElement("to", r.Source.ChiefName),
@@ -45,7 +45,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 else if (res.Effect == Card.Effect.Sha)
                 {
                     AsynchronousCore.SendMessage(
-                        new Beaver("sha", r.Target.ChiefName, ChiefBase.Chiefs2Beaver("to", new ChiefBase[] { r.Target2 }), res.SkillName, Card.Cards2Beaver("cards", res.Cards)).ToString());
+                        new Beaver("sha", r.Target.ChiefName, ChiefBase.Chiefs2Beaver("to", [r.Target2]), res.SkillName, Card.Cards2Beaver("cards", res.Cards)).ToString());
                         //new XElement("sha",
                         //    new XElement("from", r.Target.ChiefName),
                         //    ChiefBase.Chiefs2XML("to", new ChiefBase[] { r.Target2 }),

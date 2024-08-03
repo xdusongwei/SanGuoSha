@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SanGuoSha.ServerCore.Contest.Data.GameException
+namespace SanGuoSha.Contest.Data.GameException
 {
     /// <summary>
     /// 不能发牌的异常

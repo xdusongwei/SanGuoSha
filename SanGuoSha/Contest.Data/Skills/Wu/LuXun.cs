@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillLianYing : SkillBase
         {
@@ -19,8 +19,8 @@ namespace SanGuoSha.ServerCore.Contest.Data
             {
                 if (aData.Game.GamePlayers[aChief].Hands.Count == 0)
                 {
-                    aData.Game.AsynchronousCore.SendMessage( MessageCore.MakeTriggerSkillMesssage(aChief ,this , new ChiefBase[]{} , new Card[]{} ));
-                    aData.Game.TakeingCards(aChief, 1);
+                    aData.Game.AsynchronousCore.SendMessage( MessageCore.MakeTriggerSkillMesssage(aChief ,this , [] , [] ));
+                    aData.Game.TakingCards(aChief, 1);
                 }
             }
         

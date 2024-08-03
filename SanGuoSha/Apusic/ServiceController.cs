@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading;
 using System.Diagnostics;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
-using SanGuoSha.ServerCore.Contest.Global;
-using SanGuoSha.ServerCore.Contest.Data.GameException;
+using SanGuoSha.Contest.Data;
+using SanGuoSha.Contest.Global;
+using SanGuoSha.Contest.Data.GameException;
 
-namespace SanGuoSha.ServerCore.Contest.Apusic
+namespace SanGuoSha.Contest.Apusic
 {
     /// <summary>
     /// 服实例控制器,用于发送消息和问询,将异步信息同步到上层
@@ -17,12 +17,12 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
     internal class ServiceController
     {
         #region 询问出牌
-        public void AskForCards(GameBase aGame, Player aPlayer, SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForEnum aAskFor, Player aTarget)
+        public void AskForCards(GameBase aGame, Player aPlayer, SanGuoSha.Contest.Global.MessageCore.AskForEnum aAskFor, Player aTarget)
         {
             AskForCards(aGame, aPlayer, aAskFor, aTarget, null ,0);
         }
 
-        public void AskForCards(GameBase aGame, Player aPlayer, SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForEnum aAskFor)
+        public void AskForCards(GameBase aGame, Player aPlayer, SanGuoSha.Contest.Global.MessageCore.AskForEnum aAskFor)
         {
             AskForCards( aGame,  aPlayer,  aAskFor , null , null,0);
         }
@@ -36,7 +36,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
         /// <param name="aTarget">问询目标</param>
         /// <param name="aCount">问询的牌数量</param>
         /// <param name="aAbstentionTable">表决字典</param>
-        public void AskForCards(GameBase aGame, Player aPlayer, SanGuoSha.ServerCore.Contest.Global.MessageCore.AskForEnum aAskFor, Player aTarget, Dictionary<Player, bool> aAbstentionTable , int aCount)
+        public void AskForCards(GameBase aGame, Player aPlayer, SanGuoSha.Contest.Global.MessageCore.AskForEnum aAskFor, Player aTarget, Dictionary<Player, bool> aAbstentionTable , int aCount)
         {
             if (aGame.GamePlayers.All.Where(c => !c.IsEscaped && !c.IsOffline).Count() <2)
             {
@@ -50,8 +50,8 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                 aGame.Response.HasResponse = false;
                 aGame.Response.Effect = Card.Effect.None;
                 aGame.Response.Source = aPlayer;
-                aGame.Response.Targets = new Player[0] { };
-                aGame.Response.Cards = new Card[0] { };
+                aGame.Response.Targets = [];
+                aGame.Response.Cards = [];
                 aGame.Response.SkillName = string.Empty;
                 return;
             }
@@ -62,9 +62,9 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
                 {
                     Thread.Sleep(1500);
                     aGame.Response.Answer = false;
-                    aGame.Response.Cards = new Card[] { };
+                    aGame.Response.Cards = [];
                     aGame.Response.SkillName = string.Empty;
-                    aGame.Response.Targets = new Player[] { };
+                    aGame.Response.Targets = [];
                     aGame.Response.IsTimeout = false;
                     aGame.Response.HasResponse = true;
                     return;
@@ -74,9 +74,9 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
             {
                 //Thread.Sleep(1500);
                 aGame.Response.Answer = false;
-                aGame.Response.Cards = new Card[] { };
+                aGame.Response.Cards = [];
                 aGame.Response.SkillName = string.Empty;
-                aGame.Response.Targets = new Player[] { };
+                aGame.Response.Targets = [];
                 aGame.Response.IsTimeout = false;
                 aGame.Response.HasResponse = true;
                 return;
@@ -88,7 +88,7 @@ namespace SanGuoSha.ServerCore.Contest.Apusic
             {
                 //重置回应数据区
                 aGame.Response.Reset();
-                aGame.Response.Cards = new Card[0];
+                aGame.Response.Cards = [];
                 aGame.Response.Effect = Card.Effect.None;
                 //如果问询不是弃牌,那么倒数计时重置(因为弃牌可以多次,但时间总和必须在规定超时内)
                 if (aAskFor != MessageCore.AskForEnum.AbandonmentNext)

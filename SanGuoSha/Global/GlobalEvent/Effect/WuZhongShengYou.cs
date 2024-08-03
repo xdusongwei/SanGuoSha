@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Data;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -19,7 +19,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 //进入无懈可击的过程
                 if (WuXieProc(r.Target, Card.Effect.WuZhongShengYou)) return r;
                 //从牌堆拿出来两张牌
-                Card[] ret = TakeingCards(r.Source, 2);
+                Card[] ret = TakingCards(r.Source, 2);
                 //加入到子事件中
                 DropCards(false, CardFrom.None, r.SkillName, ret, Card.Effect.None, r.Source, r.Source, null);
             }

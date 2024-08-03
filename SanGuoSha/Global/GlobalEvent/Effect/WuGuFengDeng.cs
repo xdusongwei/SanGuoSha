@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Xml.Linq;
-using SanGuoSha.ServerCore.Contest.Data;
+using SanGuoSha.Contest.Data;
 using BeaverMarkupLanguage;
 
-namespace SanGuoSha.ServerCore.Contest.Global
+namespace SanGuoSha.Contest.Global
 {
     public partial class GlobalEvent
     {
@@ -29,7 +29,7 @@ namespace SanGuoSha.ServerCore.Contest.Global
                 //回应的牌不正确,则自动选择一张
                 if (res.Cards.Count() != 1 || (res.Cards.Count() == 1 && !CardsBuffer[WGFDSlotName].Cards.Contains(res.Cards[0])))
                 {
-                    res = new MessageCore.AskForResult(false, r.Target, new ChiefBase[] { }, new Card[] { CardsBuffer[WGFDSlotName].Cards[GetRandom(CardsBuffer[WGFDSlotName].Cards.Count)] }, Card.Effect.None, false, false, res.SkillName);
+                    res = new MessageCore.AskForResult(false, r.Target, [], [CardsBuffer[WGFDSlotName].Cards[GetRandom(CardsBuffer[WGFDSlotName].Cards.Count)]], Card.Effect.None, false, false, res.SkillName);
                 }
                 foreach (Card c in res.Cards)
                 {

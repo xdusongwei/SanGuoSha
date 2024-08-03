@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using SanGuoSha.ServerCore.Contest.Global;
+using SanGuoSha.Contest.Global;
 
-namespace SanGuoSha.ServerCore.Contest.Data
+namespace SanGuoSha.Contest.Data
 {
     internal class SkillGuiCai : SkillBase
     {
@@ -20,11 +20,11 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 if (res.Cards.Count() == 1)
                 {
                     //旧的判定牌删去
-                    aData.Game.DropCards(true, GlobalEvent.CardFrom.None, res.SkillName, new Card[] { aJudgementCard }, Card.Effect.None, aJudgeChief, null, null);
+                    aData.Game.DropCards(true, GlobalEvent.CardFrom.None, res.SkillName, [aJudgementCard], Card.Effect.None, aJudgeChief, null, null);
                     //将自己的这张手牌除去
                     aData.Game.DropCards(false, GlobalEvent.CardFrom.Hand, res.SkillName, res.Cards, Card.Effect.None, aThisChief, null, null);
                     //触发技能的消息
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aThisChief, this, new ChiefBase[] { aJudgeChief }, res.Cards));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aThisChief, this, [aJudgeChief], res.Cards));
                     //返回新的判定牌
                     return res.Cards[0];
                 }
@@ -41,7 +41,7 @@ namespace SanGuoSha.ServerCore.Contest.Data
 
         }
 
-        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
+        public override void OnChiefHarmed(GlobalEvent.EventRecoard aSourceEvent, ChiefBase? aSource, ChiefBase aTarget, GlobalData aData, sbyte aDamage)
         {
             if (aSource != null && aData.Game.GamePlayers[aSource].HasCard)
             {
@@ -49,11 +49,11 @@ namespace SanGuoSha.ServerCore.Contest.Data
                 MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTarget);
                 if (res.YN == true && aData.Game.GamePlayers[aSource].HasCard)
                 {
-                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, new ChiefBase[] { aSource }, new Card[] { }));
+                    aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, [aSource], []));
                     res = aData.Game.AsynchronousCore.AskForCards(aTarget, MessageCore.AskForEnum.TargetCard, aSource);
                     if (res.Cards.Count() == 0)
                         if (aData.Game.GamePlayers[aSource].HasCard)
-                            res = new MessageCore.AskForResult(false, aTarget, new ChiefBase[] { }, new Card[] { aData.Game.AutoSelect(aSource) }, Card.Effect.GuoHeChaiQiao, false, false, string.Empty);
+                            res = new MessageCore.AskForResult(false, aTarget, [], [aData.Game.AutoSelect(aSource)], Card.Effect.GuoHeChaiQiao, false, false, string.Empty);
                         else
                             return;
                     //检查牌的来源知否是正确
