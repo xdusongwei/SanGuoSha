@@ -39,7 +39,7 @@ namespace SanGuoSha.Contest.Data
             for (i = 0; i < aDamage; i++)
             {
                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aTarget, this));
-                MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTarget);
+                MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aTarget);
                 if (res.YN)
                 {
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, [], []));

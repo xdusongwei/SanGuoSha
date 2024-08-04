@@ -26,7 +26,7 @@ namespace SanGuoSha.Contest.Global
                     //    new XElement("target2", r.Target.ChiefName)
                     //));
                 //问询玩家选择对方一张牌
-                MessageCore.AskForResult res = AsynchronousCore.AskForCards(r.Source, MessageCore.AskForEnum.TargetCardWithJudgementArea, r.Target);
+                MessageCore.AskForResult? res = AsynchronousCore.AskForCards(r.Source, MessageCore.AskForEnum.TargetCardWithJudgementArea, r.Target);
                 //如果没有选那就自动抽一张
                 if (res.Effect == Card.Effect.None || res.Cards.Count() != 1)
                 {

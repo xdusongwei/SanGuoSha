@@ -86,7 +86,7 @@ namespace SanGuoSha.Contest.Data
                             new XElement("askfor.jijiang.sha",
                             new XElement("target", t.ChiefName)
                             );
-                        MessageCore.AskForResult res2 = aData.Game.AsynchronousCore.AskForCards(t, MessageCore.AskForEnum.Sha, new AskForWrapper(msg, aData.Game), aData);
+                        MessageCore.AskForResult? res2 = aData.Game.AsynchronousCore.AskForCards(t, MessageCore.AskForEnum.Sha, new AskForWrapper(msg, aData.Game), aData);
                         if (res2.Effect == Card.Effect.Sha)
                         {
                             aData.Game.AsynchronousCore.SendMessage(

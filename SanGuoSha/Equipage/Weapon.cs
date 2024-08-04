@@ -201,7 +201,7 @@ namespace SanGuoSha.Contest.Equipage
                                 //    new XElement("target2" , aTarget.ChiefName)
                                 //    )
                                 //);
-                            MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForCards(aSource, MessageCore.AskForEnum.TargetCard, aTarget);
+                            MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForCards(aSource, MessageCore.AskForEnum.TargetCard, aTarget);
                             if (res.Effect != Card.Effect.None)
                             {
                                 ret = false;
@@ -244,7 +244,7 @@ namespace SanGuoSha.Contest.Equipage
                                 //    new XElement("target2" , aTarget.ChiefName )
                                 //    )
                                 //);
-                            MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForCards(aSource, MessageCore.AskForEnum.TargetHorse, aTarget);
+                            MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForCards(aSource, MessageCore.AskForEnum.TargetHorse, aTarget);
                             if (res.Effect != Card.Effect.None)
                             {
                                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeDropMessage(aSource , aTarget , res.Cards));
@@ -275,7 +275,7 @@ namespace SanGuoSha.Contest.Equipage
         public static bool TargetShan(Card.Effect aWeaponEffect, ChiefBase aSource, ChiefBase aTarget, GlobalData aData , GlobalEvent.EventRecoard aShaEvent)
         {
             string msg = null;
-            MessageCore.AskForResult res = null;
+            MessageCore.AskForResult? res = null;
             switch (aWeaponEffect)
             {
                 case Card.Effect.GuanShiFu:
@@ -331,7 +331,7 @@ namespace SanGuoSha.Contest.Equipage
                             //    new XElement("target" , aSource.ChiefName)
                             //    )
                             //);
-                        MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aSource);
+                        MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aSource);
                         if (res.YN == true)
                         {
                             aCards[0].Element = Card.ElementType.Fire;
@@ -347,7 +347,7 @@ namespace SanGuoSha.Contest.Equipage
                             //    new XElement("target", aSource.ChiefName)
                             //    )
                             //);
-                        MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aSource);
+                        MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aSource);
                         if (res.YN == true)
                         {
                             if (aData.Game.GamePlayers[aTarget].Hands.Count != 0)

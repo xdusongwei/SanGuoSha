@@ -54,7 +54,7 @@ namespace SanGuoSha.Contest.Data
             aChief.SlotsBuffer[Bottom].Cards.Clear();
             aChief.SlotsBuffer[Total].Cards.Clear();
             aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aChief, this));
-            MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
+            MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aChief);
             if (res.YN)
             {
                 int alive = aData.Game.GamePlayers.PeoplealiveCount;

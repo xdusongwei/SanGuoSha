@@ -20,7 +20,7 @@ namespace SanGuoSha.Contest.Data
             {
                 //问询是否发动技能
                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aTarget, this));
-                MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTarget);
+                MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aTarget);
                 if (res.YN == true && aData.Game.HasCardsInBin(aSourceEvent.Cards))
                 {
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, [], aSourceEvent.Cards));
@@ -86,7 +86,7 @@ namespace SanGuoSha.Contest.Data
                         //new XElement("askfor.hujia.shan",
                         //    new XElement("target", t.ChiefName)
                         //    );
-                        MessageCore.AskForResult res2 = aData.Game.AsynchronousCore.AskForCards(t, MessageCore.AskForEnum.Shan, new AskForWrapper(msg, aData.Game), aData);
+                        MessageCore.AskForResult? res2 = aData.Game.AsynchronousCore.AskForCards(t, MessageCore.AskForEnum.Shan, new AskForWrapper(msg, aData.Game), aData);
                         if (res2.Effect == Card.Effect.Shan)
                         {
                             aData.Game.AsynchronousCore.SendMessage(

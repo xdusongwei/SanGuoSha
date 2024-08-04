@@ -25,7 +25,7 @@ namespace SanGuoSha.Contest.Global
                     //    new XElement("target", r.Target.ChiefName)
                     //    );
                 //获取问询结果
-                MessageCore.AskForResult res = AsynchronousCore.AskForCards(r.Target, MessageCore.AskForEnum.WuGuFengDeng, new AskForWrapper(msg, this), gData);
+                MessageCore.AskForResult? res = AsynchronousCore.AskForCards(r.Target, MessageCore.AskForEnum.WuGuFengDeng, new AskForWrapper(msg, this), gData);
                 //回应的牌不正确,则自动选择一张
                 if (res.Cards.Count() != 1 || (res.Cards.Count() == 1 && !CardsBuffer[WGFDSlotName].Cards.Contains(res.Cards[0])))
                 {

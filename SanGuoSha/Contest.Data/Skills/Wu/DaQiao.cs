@@ -21,7 +21,7 @@ namespace SanGuoSha.Contest.Data
             if (aEvent.Effect == Card.Effect.Sha)
             {
                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aTargetChief, this));
-                MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTargetChief);
+                MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aTargetChief);
                 if (res.YN)
                 {
                     aData.Game.AsynchronousCore.SendMessage(new Beaver("askfor.liuli.args" , aTargetChief.ChiefName).ToString());// new XElement("askfor.liuli.args", new XElement("target", aTargetChief.ChiefName)));

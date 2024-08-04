@@ -23,7 +23,7 @@ namespace SanGuoSha.Contest.Global
                     //new XElement("askfor.abandonment",
                     //    new XElement("target", aChief.ChiefName)
                     //);
-                MessageCore.AskForResult res = null;
+                MessageCore.AskForResult? res = null;
                 if (first)
                 {
                     first = false;

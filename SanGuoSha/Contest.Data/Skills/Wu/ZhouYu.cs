@@ -41,14 +41,14 @@ namespace SanGuoSha.Contest.Data
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, Player.Players2Chiefs(aData.Game.Response.Targets), []));
                     ChiefBase target = aData.Game.Response.Targets[0].Chief;
                     aData.Game.AsynchronousCore.SendMessage(new Beaver("askfor.fanjian.suit" , target.ChiefName).ToString());// new XElement("askfor.fanjian.suit", new XElement("target", target.ChiefName)));
-                    MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForCards(target, MessageCore.AskForEnum.Suit, target);
+                    MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForCards(target, MessageCore.AskForEnum.Suit, target);
                     if (res.Cards.Count() == 0)
                         aData.Game.AsynchronousCore.SendMessage(new Beaver("fanjian.suit" , target.ChiefName , Card.Cards2Beaver("cards" , [CardHeap.Spade])).ToString());// new XElement("fanjian.suit", new XElement("target", target.ChiefName), Card.Cards2XML("cards", new Card[] { CardHeap.Spade })));
                     else
                         aData.Game.AsynchronousCore.SendMessage(new Beaver("fanjian.suit" , target.ChiefName , Card.Cards2Beaver("cards" , res.Cards)).ToString());// new XElement("fanjian.suit", new XElement("target", target.ChiefName), Card.Cards2XML("cards", res.Cards)));
                     System.Threading.Thread.Sleep(10);
                     aData.Game.AsynchronousCore.SendMessage(new Beaver("askfor.fanjian.card" ,target.ChiefName , aChief.ChiefName).ToString());//  new XElement("askfor.fanjian.card", new XElement("target", target.ChiefName), new XElement("target2", aChief)));
-                    MessageCore.AskForResult res2 = aData.Game.AsynchronousCore.AskForCards(target, MessageCore.AskForEnum.TargetCard, aChief);
+                    MessageCore.AskForResult? res2 = aData.Game.AsynchronousCore.AskForCards(target, MessageCore.AskForEnum.TargetCard, aChief);
                     Card c = aData.Game.AutoSelect(aChief);
                     aData.Game.AsynchronousCore.SendMessage(new Beaver("fanjian.card" , target.ChiefName , aChief.ChiefName , Card.Cards2Beaver("cards" , [c])).ToString());// new XElement("fanjian.card", new XElement("target", target.ChiefName), new XElement("target2", aChief.ChiefName), Card.Cards2XML("cards", new Card[] { c })));
                     if (c.CardSuit != res.Cards[0].CardSuit)

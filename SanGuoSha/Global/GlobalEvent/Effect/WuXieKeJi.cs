@@ -56,7 +56,7 @@ namespace SanGuoSha.Contest.Global
                     //    )
                     //);
                 //开始问询
-                MessageCore.AskForResult res = AsynchronousCore.AskForCards(MessageCore.AskForEnum.WuXieKeJi, abstention);
+                MessageCore.AskForResult? res = AsynchronousCore.AskForCards(MessageCore.AskForEnum.WuXieKeJi, abstention);
                 ValidityResult(res.Leader, ref res);
                 //若有玩家打出无懈可击
                 if (res.Effect == Card.Effect.WuXieKeJi)

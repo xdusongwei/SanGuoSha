@@ -22,7 +22,7 @@ namespace SanGuoSha.Contest.Global
                 if (WuXieProc(r.Target, Card.Effect.WanJianQiFa)) return r;
                 if (GamePlayers[r.Target].Armor == null || Armor.EnableFor(GamePlayers[r.Target].Armor.CardEffect, r.Cards, Card.Effect.WanJianQiFa, r.Target))
                 {
-                    MessageCore.AskForResult resShan = null;
+                    MessageCore.AskForResult? resShan = null;
                     msg = new Beaver("askfor.wjqf.shan", r.Target.ChiefName, r.Source.ChiefName).ToString();
                         //new XElement("askfor.wjqf.shan",
                         //    new XElement("target", r.Target.ChiefName),

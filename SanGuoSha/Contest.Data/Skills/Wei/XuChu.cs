@@ -15,7 +15,7 @@ namespace SanGuoSha.Contest.Data
         public override void BeforeTurnStart(ChiefBase aChief, GlobalData aData)
         {
             aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aChief, this));
-            MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
+            MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aChief);
             if (res.YN)
             {
                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));

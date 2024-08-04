@@ -23,7 +23,7 @@ namespace SanGuoSha.Contest.Global
                     Weapon.Lead(GamePlayers[r.Source].Weapon.CardEffect, r.Effect, r.Cards, gData, r.Source, r.Target);
                 if (GamePlayers[r.Target].Armor == null || (GamePlayers[r.Source].Weapon != null && Weapon.EnableTargetArmorWithMessage(GamePlayers[r.Source].Weapon.CardEffect, r.Source, r.Target, gData) && Armor.EnableFor(GamePlayers[r.Target].Armor.CardEffect, r.Cards, Card.Effect.Sha, r.Target)) || !(GamePlayers[r.Source].Weapon != null && Weapon.EnableTargetArmor(GamePlayers[r.Source].Weapon.CardEffect, r.Source, r.Target)))
                 {
-                    MessageCore.AskForResult res = null;
+                    MessageCore.AskForResult? res = null;
                     bool EnableDamage = false;
                     int times = 1;
                     foreach (ASkill s in r.Source.Skills)

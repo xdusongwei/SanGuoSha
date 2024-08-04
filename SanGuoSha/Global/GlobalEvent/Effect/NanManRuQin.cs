@@ -31,7 +31,7 @@ namespace SanGuoSha.Contest.Global
                         //    new XElement("source", r.Source.ChiefName)
                         //);
                     //问询杀
-                    MessageCore.AskForResult resSha = AsynchronousCore.AskForCards(r.Target, MessageCore.AskForEnum.Sha, new AskForWrapper(msg, this), gData);
+                    MessageCore.AskForResult? resSha = AsynchronousCore.AskForCards(r.Target, MessageCore.AskForEnum.Sha, new AskForWrapper(msg, this), gData);
                     ValidityResult(r.Target, ref resSha);
                     if (resSha.Effect == Card.Effect.Sha)
                     {

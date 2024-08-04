@@ -34,7 +34,7 @@ namespace SanGuoSha.Contest.Global
                     for (int i = 0; i < times; i++)
                     {
                         //先询问对方要出杀
-                        MessageCore.AskForResult res = null;
+                        MessageCore.AskForResult? res = null;
                         msg = new Beaver("askfor.jd.sha", r.Target.ChiefName, r.Source.ChiefName).ToString();
                             //new XElement("askfor.jd.sha",
                             //new XElement("target", r.Target.ChiefName),
@@ -80,7 +80,7 @@ namespace SanGuoSha.Contest.Global
                         //new XElement("opponent", r.Target.ChiefName)
                         //);
                         //问询自己出杀
-                        MessageCore.AskForResult res2 = AsynchronousCore.AskForCards(r.Source, MessageCore.AskForEnum.Sha, new AskForWrapper(msg, this), gData);
+                        MessageCore.AskForResult? res2 = AsynchronousCore.AskForCards(r.Source, MessageCore.AskForEnum.Sha, new AskForWrapper(msg, this), gData);
                         ValidityResult(r.Source, ref res2);
                         if (res2.Effect != Card.Effect.Sha)
                         {

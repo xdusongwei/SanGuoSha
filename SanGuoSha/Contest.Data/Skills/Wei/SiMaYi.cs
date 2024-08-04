@@ -16,7 +16,7 @@ namespace SanGuoSha.Contest.Data
             if (aData.Game.GamePlayers[aThisChief].HasHand)
             {
                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aThisChief, this));
-                MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForCards(aThisChief, MessageCore.AskForEnum.TargetHand, aThisChief);
+                MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForCards(aThisChief, MessageCore.AskForEnum.TargetHand, aThisChief);
                 if (res.Cards.Count() == 1)
                 {
                     //旧的判定牌删去
@@ -46,7 +46,7 @@ namespace SanGuoSha.Contest.Data
             if (aSource != null && aData.Game.GamePlayers[aSource].HasCard)
             {
                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aTarget, this));
-                MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aTarget);
+                MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aTarget);
                 if (res.YN == true && aData.Game.GamePlayers[aSource].HasCard)
                 {
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aTarget, this, [aSource], []));

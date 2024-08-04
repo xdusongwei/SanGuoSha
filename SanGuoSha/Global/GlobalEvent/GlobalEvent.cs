@@ -54,7 +54,7 @@ namespace SanGuoSha.Contest.Global
             string msg = null;
             do
             {
-                MessageCore.AskForResult res = null;
+                MessageCore.AskForResult? res = null;
                 if (t == aPreDefunct)
                 {
                     msg = new Beaver("askfor.cry4help.taoorjiu", t.ChiefName, aPreDefunct.ChiefName, aRescuePoint.ToString()).ToString();
@@ -709,7 +709,7 @@ namespace SanGuoSha.Contest.Global
         /// <summary>
         /// 存储每个子事件的头
         /// </summary>
-        private Queue<EventRecoard> queRecoard = new Queue<EventRecoard>();
+        private Queue<EventRecoard> queRecoard = new();
 
         /// <summary>
         /// 子事件的处理链表

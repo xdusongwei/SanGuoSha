@@ -104,7 +104,7 @@ namespace SanGuoSha.Contest.Global
                             //    new XElement("target", target.ChiefName)
                             //);
                         //开始问询
-                        MessageCore.AskForResult res = AsynchronousCore.AskForCards(target, MessageCore.AskForEnum.Aggressive, new AskForWrapper(msg, this), gData);
+                        MessageCore.AskForResult? res = AsynchronousCore.AskForCards(target, MessageCore.AskForEnum.Aggressive, new AskForWrapper(msg, this), gData);
                         //是否跳过该阶段
                         if (res.Effect == Card.Effect.None)
                         {

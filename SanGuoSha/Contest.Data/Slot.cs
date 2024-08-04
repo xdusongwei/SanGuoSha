@@ -24,7 +24,7 @@ namespace SanGuoSha.Contest.Data
             Slots = [];
         }
 
-        internal Slot? this[string aName] => Slots.Find(c => c.SlotName == aName);
+        internal Slot this[string aName] => Slots.Find(c => c.SlotName == aName);
     }
 
     /// <summary>

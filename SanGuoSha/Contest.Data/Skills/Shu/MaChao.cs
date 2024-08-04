@@ -38,7 +38,7 @@ namespace SanGuoSha.Contest.Data
             if (aEffect == Card.Effect.Sha)
             {
                 aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeAskForSkillMessage(aChief, this));
-                MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aChief);
+                MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aChief);
                 if (res.YN)
                 {
                     aData.Game.AsynchronousCore.SendMessage(MessageCore.MakeTriggerSkillMesssage(aChief, this, [], []));

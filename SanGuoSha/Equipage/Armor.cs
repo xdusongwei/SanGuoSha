@@ -100,7 +100,7 @@ namespace SanGuoSha.Contest.Equipage
                             //new XElement("askfor.armor.effect",
                             //    new XElement("target" , aOwner.ChiefName ))
                             );
-                        MessageCore.AskForResult res = aData.Game.AsynchronousCore.AskForYN(aOwner);
+                        MessageCore.AskForResult? res = aData.Game.AsynchronousCore.AskForYN(aOwner);
                         if (res.YN == true)
                         {
                             Card ret = aData.Game.popJudgementCard(aOwner, Card.Effect.BaGuaZhen);
