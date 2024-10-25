@@ -15,6 +15,12 @@ local.properties
 .classpath
 .settings/
 .loadpath
+SanGuoSha.Debug/*.cs
+.vscode/
+HtmlReport/
+*.generated.sln
+coverage.xml
+.idea/
 
 # External tool builders
 .externalToolBuilders/
